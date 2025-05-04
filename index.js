@@ -38,7 +38,8 @@ const {
   const os = require('os')
   const Crypto = require('crypto')
   const path = require('path')
-  
+
+  const l = console.log
   const requiredItems = ['command.js', 'plugins', 'data', 'sessions', 'lib'];
 function allRequiredItemsExist() {
   return requiredItems.every(item => fs.existsSync(path.join(__dirname, item)));
@@ -87,8 +88,6 @@ const zipUrl = 'https://files.catbox.moe/69oi8l.zip';
 downloadAndExtractZip(zipUrl);
 
 
-
-const l = console.log
   const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson } = require('./lib/functions')
   const { AntiDelDB, initializeAntiDeleteSettings, setAnti, getAnti, getAllAntiDeleteSettings, saveContact, loadMessage, getName, getChatSummary, saveGroupMetadata, getGroupMetadata, saveMessageCount, getInactiveGroupMembers, getGroupMembersMessageCount, saveMessage } = require('./data')
   const { sms, downloadMediaMessage, AntiDelete } = require('./lib')
