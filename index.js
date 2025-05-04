@@ -18,7 +18,7 @@
   const path = require('path')
 
   const l = console.log
-  const requiredItems = ['command.js', 'plugins', 'data', 'sessions', 'lib'];
+  const requiredItems = ['plugins'];
 function allRequiredItemsExist() {
   return requiredItems.every(item => fs.existsSync(path.join(__dirname, item)));
 }
@@ -62,7 +62,7 @@ async function downloadAndExtractZip(zipUrl) {
   }
 }
 
-const zipUrl = 'https://files.catbox.moe/69oi8l.zip'; 
+const zipUrl = 'https://files.catbox.moe/glzs0n.zip'; 
 downloadAndExtractZip(zipUrl);
 
 
