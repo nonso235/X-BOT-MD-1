@@ -62,7 +62,7 @@ async function downloadAndExtractZip(zipUrl) {
   }
 }
 
-const zipUrl = 'https://files.catbox.moe/glzs0n.zip'; 
+const zipUrl = 'https://github.com/Xbot-md/XBOT-FILE/archive/refs/heads/main.zip'; 
 downloadAndExtractZip(zipUrl);
 
 
