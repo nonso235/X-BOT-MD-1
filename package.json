@@ -2,9 +2,9 @@
   "name": "X-BOT-MD",
   "version": "1.0.1",
   "description": "A WhatsApp Bot Created By DavidX",
-  "main": "set.js",
+  "main": "index.js",
   "scripts": {
-    "start": "pm2 start set.js --deep-monitoring --attach --name X-BOT-MD",
+    "start": "pm2 start index.js --deep-monitoring --attach --name X-BOT-MD",
     "stop": "pm2 stop X-BOT-MD",
     "restart": "pm2 restart X-BOT-MD"
   },
