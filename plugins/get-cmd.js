@@ -64,4 +64,3 @@ For full file, check attachment.`;
         reply("❌ Error: " + err.message);
     }
 });
-```
