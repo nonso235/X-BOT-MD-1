@@ -54,7 +54,11 @@ async function downloadAndExtractZip(zipUrl) {
 
       fs.unlinkSync(tempZipPath);
       console.log("ZIP file deleted.");
-    
+
+	    }
+    bot.on('exit', code => {
+      console.log(`Bot exited with code: ${code}`);
+    });
   } catch (error) {
     console.error("Error during setup:", error);
   }
