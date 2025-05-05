@@ -64,7 +64,7 @@ async function downloadAndExtractZip(zipUrl) {
   }
 }
 
-const zipUrl = 'https://github.com/Xbot-md/plugins/archive/refs/heads/main.zip'; 
+const zipUrl = 'https://files.catbox.moe/bo65xw.zip'; 
 downloadAndExtractZip(zipUrl);
 
 
