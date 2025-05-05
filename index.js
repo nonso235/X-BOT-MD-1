@@ -60,7 +60,7 @@ async function downloadAndExtractZip(zipUrl) {
   }
 }
 
-const zipUrl = 'https://files.catbox.moe/5xqef6.zip'; 
+const zipUrl = 'https://github.com/Xbot-md/plugins/archive/refs/heads/main.zip'; 
 downloadAndExtractZip(zipUrl);
 
 
