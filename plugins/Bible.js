@@ -23,9 +23,9 @@ async (conn, mek, m, { from, q, reply }) => {
 │ *[ • X - MD - BIBLE • ]*
 ╰┈───────────────•
 ╭┈───────────────•
-│  ◦ *REFERENCE*: ${q}
+│  ◦ *REFERENCE*: ${reading.verse}
 │  ◦ 
-│  ◦ *READING*:\n${reading}
+│  ◦ *READING*:\n${reading.data}
 ╰┈───────────────•
 
 *•────────────•⟢*\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀᴠɪᴅx 
