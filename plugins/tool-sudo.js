@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const { cmd } = require("../command");
 
-const OWNER_PATH = path.join(__dirname, "data/owner.json");
+const OWNER_PATH = path.join(__dirname, "./data/owner.json");
 
 // مطمئن شو فایل owner.json هست
 const ensureOwnerFile = () => {
