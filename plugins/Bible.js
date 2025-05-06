@@ -16,7 +16,7 @@ async (conn, mek, m, { from, q, reply }) => {
         const url = `https://api.giftedtech.web.id/api/tools/bible?apikey=gifted&verse=${encodeURIComponent(q)}`;
 
         const response = await axios.get(url);
-        const reading = response.data.result;
+        const reading = response.result;
 
         const linkyMes = `
 ╭┈───────────────•
