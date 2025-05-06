@@ -10,25 +10,22 @@ cmd({
 },
 async (conn, mek, m, { from, q, reply }) => {
     try {
-        const args = q.split(', ');
-        if (args.length < 2) return reply("Please provide a song for the lyrics  Usage: .bible [john 3], [16]");
+        
+        if (q) return reply("Please provide a Bible verse   Usage: .bible John 3:16");
 
-        const chapter = args[0];
-        const verse = args.slice(1).join(' ');
-
-        const url = `https://bible-api.com/${encodeURIComponent(chapter)}:${encodeURIComponent(verse)}`;
+        const url = `https://api.giftedtech.web.id/api/tools/bible?apikey=gifted&verse=${encodeURIComponent(q)}`;
 
         const response = await axios.get(url);
-        const lyrics = response.data.lyrics;
+        const reading = response.data.result;
 
         const linkyMes = `
 ╭┈───────────────•
 │ *[ • X - MD - BIBLE • ]*
 ╰┈───────────────•
 ╭┈───────────────•
-│  ◦ *REFERENCE*: ${reference}
+│  ◦ *REFERENCE*: ${q}
 │  ◦ 
-│  ◦ *READING*:\n${text}
+│  ◦ *READING*:\n${reading}
 ╰┈───────────────•
 
 *•────────────•⟢*\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀᴠɪᴅx 
