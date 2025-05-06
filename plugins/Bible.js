@@ -1,4 +1,4 @@
-const axios = require('axios');
+/*const axios = require('axios');
 const { cmd } = require('../command');
 cmd({
     pattern: "bible",
@@ -39,6 +39,6 @@ async (conn, mek, m, { from, q, reply }) => {
     }
 });
     
-
+*/
 
           
