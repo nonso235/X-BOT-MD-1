@@ -10,8 +10,9 @@ cmd({
     category: "system",
     react: "⚡",
     filename: __filename
-}, async (conn, mek, m, { from, quoted, sender, reply }) => {
+}, async (conn, mek, m, { from, quoted, isOwner, sender, reply }) => {
     try {
+        if (!isOwner) return reply("*You are not permitted to USe this command!*");
         const start = new Date().getTime();
 
         const reactionEmojis = ['🔥', '⚡', '🚀', '💨', '🎯', '🎉', '🌟', '💥', '🕐', '🔹'];
