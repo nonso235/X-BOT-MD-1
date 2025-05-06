@@ -35,13 +35,15 @@ cmd({
         const uptime = runtime(process.uptime());
         const startTime = new Date(Date.now() - process.uptime() * 1000);
         
-        const text = `${config.SESSION_ID}\nResponse Time: ${responseTime} seconds\nUptime: ${uptime}`;
+        const text = `${config.SESSION_ID}`;
 
         // ارسال تصویر همراه با متن
         await conn.sendMessage(from, {
             image: { url: "https://files.catbox.moe/yv8zy4.jpg" },  // آدرس تصویر دلخواه خود را وارد کنید
             caption: text
         }, { quoted: mek });
+
+        await reply(`Response Time: ${responseTime} seconds\n\nUptime: ${uptime}`);
 
     } catch (e) {
         console.error("Error in ping command:", e);
