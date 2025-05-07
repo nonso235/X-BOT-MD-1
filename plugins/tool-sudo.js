@@ -13,11 +13,11 @@ const ensureOwnerFile = () => {
 
 // افزودن شماره به owner.json
 cmd({
-    pattern: "addsudo",
+    pattern: "setsudo",
     alias: [],
     desc: "Add a temporary owner",
     category: "owner",
-    react: "✅",
+    react: "😇",
     filename: __filename
 }, async (conn, mek, m, { from, args, q, isCreator, reply, isOwner }) => {
     try {
@@ -29,7 +29,7 @@ cmd({
             || (args[0]?.replace(/[^0-9]/g, '') + "@s.whatsapp.net");
 
         // اگر هیچ هدفی وارد نشده بود، پیام خطا بده
-        if (!q) return reply("❌ Please provide a number or tag/reply a user.");
+        if (!target) return reply("❌ Please provide a number or tag/reply a user.");
 
         let own = JSON.parse(fs.readFileSync("./lib/owner.json", "utf-8"));
 
@@ -58,7 +58,7 @@ cmd({
     alias: [],
     desc: "Remove a temporary owner",
     category: "owner",
-    react: "❌",
+    react: "🫩",
     filename: __filename
 }, async (conn, mek, m, { from, args, q, isCreator, reply, isOwner }) => {
     try {
@@ -69,7 +69,7 @@ cmd({
             || (args[0]?.replace(/[^0-9]/g, '') + "@s.whatsapp.net");
 
         // اگر هیچ هدفی وارد نشده بود، پیام خطا بده
-        if (!q) return reply("❌ Please provide a number or tag/reply a user.");
+        if (!target) return reply("❌ Please provide a number or tag/reply a user.");
 
         let own = JSON.parse(fs.readFileSync("./lib/owner.json", "utf-8"));
 
