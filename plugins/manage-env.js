@@ -496,8 +496,6 @@ cmd({
 }, async (conn, mek, m, { isGroup, isAdmins, isBotAdmins, args, reply }) => {
   try {
     if (!isGroup) return reply('This command can only be used in a group.');
-    if (!isBotAdmins) return reply('Bot must be an admin to use this command.');
-    if (!isAdmins) return reply('You must be an admin to use this command.');
 
     if (args[0] === "on") {
       config.ANTI_LINK = "true";
