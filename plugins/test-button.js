@@ -37,9 +37,8 @@ cmd({
       caption: caption,
       footer: "David",
       templateButtons: [
-        { index: 1, quickReplyButton: { displayText: "✅ Alive", id: ".alive" } },
-        { index: 2, quickReplyButton: { displayText: "📶 Ping", id: ".ping" } },
-        { index: 3, quickReplyButton: { displayText: "📋 All Menus", id: ".menu" } }
+        { index: 1, quickReplyButton: { displayText: "📶 Ping", id: ",ping" } },
+        { index: 2, quickReplyButton: { displayText: "📋 All Menus", id: ",menu" } }
       ]
     };
 
