@@ -24,7 +24,7 @@
       "required": false,
       "value": "public"
       
-    }
+    },
         "AUTO_STATUS_SEEN": {
       "description": "Make it true for automatic status seen.",
       "required": true,
