@@ -3,10 +3,15 @@
   "version": "2.0.0",
   "description": "A WhatsApp Bot Created By DavidX",
   "main": "index.js",
+  "engines": {
+    "npm": ">=9.7.2",
+    "node": ">=20.0.0"
+  },
   "scripts": {
-    "start": "pm2 start index.js --deep-monitoring --attach --name XBOT-MD",
-    "stop": "pm2 stop XBOT-MD",
-    "restart": "pm2 restart XBOT-MD"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "stop": "echo 'No stop functionality (use Ctrl+C to stop)'",
+    "restart": "echo 'No restart functionality (use manual restart)'"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "github:WhiskeySockets/Baileys",
