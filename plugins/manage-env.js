@@ -86,7 +86,7 @@ cmd({
     if (!isCreator) return reply("_*❗This Command Can Only Be Used By My Owner !*_");
 
     if (!args[0]) {
-        const text = `> *𝐌𝐎𝐃𝐄 𝐒𝐄𝐓𝐓𝐈𝐍𝐆𝐒*\n\n> Current mode: *public*\n\nReply With:\n\n*1.* To Enable Public Mode\n*2.* To Enable Private Mode\n Mode\n\n╭────────────────\n│ *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀᴠɪᴅx ᴛᴇᴄʜ*\n╰─────────────────◆`;
+        const text = `> *𝐌𝐎𝐃𝐄 𝐒𝐄𝐓𝐓𝐈𝐍𝐆𝐒*\n\n> Current mode: *public*\n\nReply With:\n\n*1.* To Enable Public Mode\n*2.* To Enable Private Mode\n╭────────────────\n│ *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀᴠɪᴅx ᴛᴇᴄʜ*\n╰─────────────────◆`;
 
         const sentMsg = await conn.sendMessage(from, {
             image: { url: "https://files.catbox.moe/06cgye.jpg" },  // تصویر منوی مد
