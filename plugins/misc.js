@@ -1,73 +1,94 @@
-const axios = require('axios');
 const config = require('../config');
+const fs = require('fs');
+const { getAnti, setAnti } = require('../data/antidel');
 const { cmd, commands } = require('../command');
-const util = require("util");
-const { getAnti, setAnti, initializeAntiDeleteSettings } = require('../data/antidel');
-
-initializeAntiDeleteSettings();
+const axios = require('axios');
+const prefix = config.PREFIX;
+const AdmZip = require("adm-zip");
+const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, sleep, fetchJson } = require('../lib/functions2');
+const { writeFileSync } = require('fs');
+const path = require('path');
 
 cmd({
     pattern: "antidelete",
     alias: ['antidel', 'ad'],
-    desc: "Sets up the Antidelete",
+    desc: "Manage AntiDelete Settings with Reply Menu",
+    react: "🔄",
     category: "misc",
-    filename: __filename
+    filename: __filename,
 },
-async (conn, mek, m, { from, reply, q, text, isCreator, fromMe }) => {
-    if (!isCreator) return reply('This command is only for the bot owner');
-    try {
-        const command = q?.toLowerCase();
+async (conn, mek, m, { from, reply, isCreator }) => {
+    if (!isCreator) return reply("*Only the bot owner can use this command!*");
 
-        switch (command) {
-            case 'off':
-                await setAnti('gc', false);
-                await setAnti('dm', false);
-                return reply('_AntiDelete is now off for Group Chats and Direct Messages._');
+    const dmStatus = config.ANTI_DEL_PATH === "log";
 
-            case 'off gc':
-                await setAnti('gc', false);
-                return reply('_AntiDelete for Group Chats is now disabled._');
+    const menuText = `> *ANTI-DELETE 𝐌𝐎𝐃𝐄 𝐒𝐄𝐓𝐓𝐈𝐍𝐆𝐒*
 
-            case 'off dm':
-                await setAnti('dm', false);
-                return reply('_AntiDelete for Direct Messages is now disabled._');
+> Current DM: ${dmStatus ? "✅ ON (log)" : "❌ OFF (same)"}
 
-            case 'set gc':
-                const gcStatus = await getAnti('gc');
-                await setAnti('gc', !gcStatus);
-                return reply(`_AntiDelete for Group Chats ${!gcStatus ? 'enabled' : 'disabled'}._`);
+Reply with:
 
-            case 'set dm':
-                const dmStatus = await getAnti('dm');
-                await setAnti('dm', !dmStatus);
-                return reply(`_AntiDelete for Direct Messages ${!dmStatus ? 'enabled' : 'disabled'}._`);
+*1.* To Enable Antidelete for All (Group,DM) Same Chat  
+*2.* To Enable Antidelete for All (Group,DM) dm Chat  
+*3.* To Disable All Antidelete and reset
 
-            case 'on':
+╭────────────────◆  
+│> *POWERED BY DAVIDX*  
+╰─────────────────◆`;
+
+    const sentMsg = await conn.sendMessage(from, {
+        image: { url: "https://files.catbox.moe/yv8zy4.jpg" },
+        caption: menuText
+    }, { quoted: mek });
+
+    const messageID = sentMsg.key.id;
+
+    const handler = async (msgData) => {
+        try {
+            const receivedMsg = msgData.messages[0];
+            if (!receivedMsg?.message || !receivedMsg.key?.remoteJid) return;
+
+            const quotedId = receivedMsg.message?.extendedTextMessage?.contextInfo?.stanzaId;
+            const isReply = quotedId === messageID;
+            if (!isReply) return;
+
+            const replyText =
+                receivedMsg.message?.conversation ||
+                receivedMsg.message?.extendedTextMessage?.text || "";
+
+            let responseText = "";
+
+            if (replyText === "1") {
                 await setAnti('gc', true);
                 await setAnti('dm', true);
-                return reply('_AntiDelete turned on for all chats._');
+                config.ANTI_DEL_PATH = "same";
+                fs.writeFileSync('./config.js', `module.exports = ${JSON.stringify(config, null, 2)};`);
+                responseText = "✅ AntiDelete Enabled.\nand Mode is Same chat\nGroup: ON\nDM: ON (same)";
+            } else if (replyText === "2") {
+                await setAnti('gc', true);
+                await setAnti('dm', true);
+                config.ANTI_DEL_PATH = "log";
+                fs.writeFileSync('./config.js', `module.exports = ${JSON.stringify(config, null, 2)};`);
+                responseText = "✅ AntiDelete Mode changed to DM Log.\nGroup: ON\nDM: ON (log)";
+            } else if (replyText === "3") {
+                await setAnti('gc', false);
+                await setAnti('dm', false);
+                config.ANTI_DEL_PATH = "same";
+                fs.writeFileSync('./config.js', `module.exports = ${JSON.stringify(config, null, 2)};`);
+                responseText = "❌ AntiDelete turned off for both Group and DM.";
+            } else {
+                responseText = "❌ Invalid input. Please reply with *1*, *2*, or *3*.";
+            }
 
-            case 'status':
-                const currentDmStatus = await getAnti('dm');
-                const currentGcStatus = await getAnti('gc');
-                return reply(`_AntiDelete Status_\n\n*DM AntiDelete:* ${currentDmStatus ? 'Enabled' : 'Disabled'}\n*Group Chat AntiDelete:* ${currentGcStatus ? 'Enabled' : 'Disabled'}`);
-
-            default:
-                const helpMessage = `-- *AntiDelete Command Guide: --*
-                • \`\`.antidelete off\`\` - Reset AntiDelete for all chats (disabled by default)
-                • \`\`.antidelete off gc\`\` - Disable AntiDelete for Group Chats
-                • \`\`.antidelete off dm\`\` - Disable AntiDelete for Direct Messages
-                • \`\`.antidelete set gc\`\` - Toggle AntiDelete for Group Chats
-                • \`\`.antidelete set dm\`\` - Toggle AntiDelete for Direct Messages
-                • \`\`.antidelete on\`\` - Enable AntiDelete for all chats
-                • \`\`.antidelete status\`\` - Check current AntiDelete status`;
-
-                return reply(helpMessage);
+            await conn.sendMessage(from, { text: responseText }, { quoted: receivedMsg });
+            conn.ev.off("messages.upsert", handler);
+        } catch (err) {
+            console.error("AntiDelete handler error:", err);
         }
-    } catch (e) {
-        console.error("Error in antidelete command:", e);
-        return reply("An error occurred while processing your request.");
-    }
+    };
+
+    conn.ev.on("messages.upsert", handler);
+    setTimeout(() => conn.ev.off("messages.upsert", handler), 30 * 60 * 1000); // 30 دقیقه
 });
 
 
