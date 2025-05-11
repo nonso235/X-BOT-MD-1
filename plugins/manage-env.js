@@ -116,8 +116,6 @@ cmd({
                 let newMode = "";
                 if (replyText === "1") newMode = "public";
                 else if (replyText === "2") newMode = "private";
-                else if (replyText === "3") newMode = "inbox";
-                else if (replyText === "4") newMode = "groups";
 
                 if (newMode) {
                     config.MODE = newMode;
@@ -130,30 +128,6 @@ cmd({
                     }, { quoted: receivedMsg });
                 }
 
-                conn.ev.off("messages.upsert", handler);
-            } catch (e) {
-                console.log("Mode handler error:", e);
-            }
-        };
-
-        conn.ev.on("messages.upsert", handler);
-
-        setTimeout(() => {
-            conn.ev.off("messages.upsert", handler);
-        }, 600000);
-
-        return;
-    }
-
-    const modeArg = args[0].toLowerCase();
-
-    if (["public", "private", "inbox", "groups"].includes(modeArg)) {
-      config.MODE = modeArg;
-      return reply(`✅ Bot mode is now set to *${modeArg.toUpperCase()}*.`);
-    } else {
-      return reply("❌ Invalid mode. Please use `.mode public`, `.mode private`, `.mode inbox`, or `.mode groups`.");
-    }
-});
 
 cmd({
     pattern: "auto-typing",
