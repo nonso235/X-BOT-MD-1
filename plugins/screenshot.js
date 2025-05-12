@@ -1,4 +1,4 @@
-const axios = require("axios");
+/*const axios = require("axios");
 const config = require('../config');
 const { cmd } = require('../command');
 
@@ -37,3 +37,4 @@ async (conn, mek, m, {
     reply("Failed to capture the screenshot. Please try again.");
   }
 });
+*/
