@@ -1,5 +1,3 @@
-
-const {getContextInfo} = require('./new')
 const axios = require("axios");
 const config = require('../config');
 const { cmd } = require('../command');
@@ -16,7 +14,7 @@ cmd({
 async (conn, mek, m, {
   from, l, quoted, body, isCmd, command, args, q, isGroup, sender, 
   senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, 
-  groupMetadata, groupName, participants, isItzcp, groupAdmins, 
+  groupMetadata, groupName, participants, groupAdmins, 
   isBotAdmins, isAdmins, reply 
 }) => {
   if (!q) {
@@ -31,9 +29,7 @@ async (conn, mek, m, {
     // give credit and use
     const imageMessage = {
       image: { url: screenshotUrl },
-      caption: "*SS WEB*",
-      contextInfo: getContextInfo(m.sender)
-    };
+      caption: "*SS WEB*";
 
     await conn.sendMessage(from, imageMessage, { quoted: m });
   } catch (error) {
