@@ -78,7 +78,8 @@ const Gifted = GiftedConnect({
         logger: P({ level: 'silent' }),
         printQRInTerminal: !config.SESSION_ID, 
 
-
+//.............................
+	
   const path = require('path');
   fs.readdirSync("./plugins/").forEach((plugin) => {
   if (path.extname(plugin).toLowerCase() == ".js") {
