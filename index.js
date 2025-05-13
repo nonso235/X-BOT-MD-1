@@ -68,16 +68,15 @@ const {
   //===================SESSION-AUTH============================
 const { loadSession } = require("./lib/creds");
 // Other things....
-async function ConnectToWA() {
+async function ConnectGiftedToWA() {
   await loadSession();
-console.log('Connecting to Whatsapp')
+console.log('⏱️ Conneting Gifted Md ⏱️')
 const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/session/')
 var { version, isLatest } = await fetchLatestBaileysVersion()
 
-const conn = makeWASocket({
+const Gifted = GiftedConnect({
         logger: P({ level: 'silent' }),
         printQRInTerminal: !config.SESSION_ID, 
-
 
 
   const path = require('path');
