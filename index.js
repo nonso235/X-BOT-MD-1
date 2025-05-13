@@ -81,10 +81,7 @@ const conn = makeWASocket({
           syncFullHistory: true,
           auth: state,
           version
-          })
-      
- {
-  connectToWA()
+})
   }
   } else if (connection === 'open') {
   console.log('Installing Plugins')
