@@ -75,7 +75,7 @@ cmd({
     // Format the response
     await reply(
       `*QR DaTa ReSult*\n\n` +
-      `${scanResponse.data.result.qrcode_data}\n\n`
+      `${scanResponse.data.result.qrcode_data}`
     );
 
   } catch (error) {
