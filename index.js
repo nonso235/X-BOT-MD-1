@@ -76,7 +76,8 @@ var { version, isLatest } = await fetchLatestBaileysVersion()
 
 const Gifted = GiftedConnect({
         logger: P({ level: 'silent' }),
-        printQRInTerminal: !config.SESSION_ID,
+        printQRInTerminal: !config.SESSION_ID
+})
   }
   } else if (connection === 'open') {
   console.log('Installing Plugins')
