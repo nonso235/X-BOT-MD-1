@@ -81,7 +81,7 @@ const conn = makeWASocket({
           syncFullHistory: true,
           auth: state,
           version
-;
+
 
 
   const path = require('path');
