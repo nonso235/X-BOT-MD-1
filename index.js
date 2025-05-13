@@ -80,10 +80,8 @@ const conn = makeWASocket({
           browser: Browsers.macOS("Firefox"),
           syncFullHistory: true,
           auth: state,
-          version
-})
-  {
-  console.log('Installing Plugins')
+          version});
+
   const path = require('path');
   fs.readdirSync("./plugins/").forEach((plugin) => {
   if (path.extname(plugin).toLowerCase() == ".js") {
