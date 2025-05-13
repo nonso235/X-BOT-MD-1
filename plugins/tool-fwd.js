@@ -65,7 +65,7 @@ cmd({
     }
 
     // Scan the image using the API
-    const scanUrl = `https://api.gifted.my.id/api/tools/readqr?apikey=gifted-md&url=${encodeURIComponent(imageUrl)}`;
+    const scanUrl = `https://api.gifted.my.id/api/tools/readqr?apikey=gifted&url=${encodeURIComponent(imageUrl)}`;
     const scanResponse = await axios.get(scanUrl);
 
     if (!scanResponse.data.success) {
