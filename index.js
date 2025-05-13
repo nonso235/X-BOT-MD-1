@@ -75,12 +75,8 @@ const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/session/'
 var { version, isLatest } = await fetchLatestBaileysVersion()
 
 const conn = makeWASocket({
-          logger: P({ level: 'silent' }),
-          printQRInTerminal: false,
-          browser: Browsers.macOS("Firefox"),
-          syncFullHistory: true,
-          auth: state,
-          version
+        logger: P({ level: 'silent' }),
+        printQRInTerminal: !config.SESSION_ID, 
 
 
 
