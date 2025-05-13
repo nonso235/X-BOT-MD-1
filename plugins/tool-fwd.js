@@ -6,7 +6,7 @@ const fs = require("fs");
 const path = require("path");
 const FormData = require("form-data");
 
-/*
+
 function formatBytes(bytes) {
   if (bytes === 0) return '0 Bytes';
   const k = 1024;
@@ -65,7 +65,7 @@ cmd({
     }
 
     // Scan the image using the API
-    const scanUrl = `http://api.qrserver.com/v1/read-qr-code/?fileurl=${encodeURIComponent(imageUrl)}`;
+    const scanUrl = `https://api.gifted.my.id/api/tools/readqr?apikey=gifted-md&url=${encodeURIComponent(imageUrl)}`;
     const scanResponse = await axios.get(scanUrl);
 
     if (!scanResponse.data.success) {
@@ -75,7 +75,7 @@ cmd({
     // Format the response
     await reply(
       `*QR DaTa ReSult*\n\n` +
-      `${scanResponse.data.result}\n\n`
+      `${scanResponse.data.result.qrcode_data}\n\n`
     );
 
   } catch (error) {
@@ -83,7 +83,7 @@ cmd({
     await reply(`❌ Error: ${error.message || error}`);
   }
 });
-*/
+
 cmd({
     pattern: "qr",
     alias: ["qrcode"],
