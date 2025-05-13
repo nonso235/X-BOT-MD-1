@@ -82,8 +82,7 @@ const conn = makeWASocket({
           auth: state,
           version
 })
-  }
-  } else if (connection === 'open') {
+  {
   console.log('Installing Plugins')
   const path = require('path');
   fs.readdirSync("./plugins/").forEach((plugin) => {
