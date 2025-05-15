@@ -64,6 +64,8 @@ const {
   
   // Clear the temp directory every 5 minutes
   setInterval(clearTempDir, 5 * 60 * 1000);
+
+
   const { loadSession } = require("./lib");
   const express = require("express");
   const app = express();
@@ -80,10 +82,8 @@ var { version, isLatest } = await fetchLatestBaileysVersion()
 
 const conn = makeWASocket({
         logger: P({ level: 'silent' }),
-        printQRInTerminal: !config.SESSION_ID
-        })
-        
-        conn.ev.on('connection.update', (update) => {
+        printQRInTerminal: !config.SESSION_ID,
+           conn.ev.on('connection.update', (update) => {
   const { connection, lastDisconnect } = update
   if (connection === 'close') {
   if (lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut) {
