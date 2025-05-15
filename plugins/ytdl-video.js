@@ -3,8 +3,8 @@ const { cmd } = require('../command');
 const yts = require('yt-search');
 
 cmd({
-    pattern: "video2",
-    alias: ["mp4", "ytvid"],
+    pattern: "ytvid",
+    alias: ["ytvurl", "videourl"],
     react: "🎥",
     desc: "Download video from YouTube",
     category: "download",
@@ -12,21 +12,14 @@ cmd({
     filename: __filename
 }, async (conn, m, mek, { from, q, reply }) => {
     try {
-        if (!q) return await reply("❌ Please provide a video name or YouTube URL!");
+        if (!q) return await reply("❌ Please provide a valide video YouTube URL!");
 
-        let videoUrl, title;
+        let videoUrl;
         
         // Check if it's a URL
         if (q.match(/(youtube\.com|youtu\.be)/)) {
             videoUrl = q;
-            const videoInfo = await yts({ videoId: q.split(/[=/]/).pop() });
-            title = videoInfo.title;
-        } else {
-            // Search YouTube
-            const search = await yts(q);
-            if (!search.videos.length) return await reply("❌ No results found!");
-            videoUrl = search.videos[0].url;
-            title = search.videos[0].title;
+            
         }
 
         await reply("⏳ Downloading video...");
@@ -37,7 +30,9 @@ cmd({
         const data = await response.json();
 
         if (!data.success) return await reply("❌ Failed to download video!");
-
+        
+      const tiltle = data.result.title;
+      
         await conn.sendMessage(from, {
             video: { url: data.result.download_url },
             mimetype: 'video/mp4',
