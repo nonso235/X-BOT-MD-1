@@ -73,6 +73,11 @@ console.log('Connecting to Whatsapp')
 const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/sessions/')
 var { version, isLatest } = await fetchLatestBaileysVersion()
 
+
+const express = require("express");
+const app = express();
+const port = process.env.PORT || 9090;
+  
 //=============================================
 
 const conn = makeWASocket({
