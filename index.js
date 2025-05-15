@@ -64,7 +64,11 @@ const {
   
   // Clear the temp directory every 5 minutes
   setInterval(clearTempDir, 5 * 60 * 1000);
-  
+
+const express = require("express");
+const app = express();
+const port = process.env.PORT || 9090;
+
   //===================SESSION-AUTH============================
 const { loadSession } = require("./lib");
 async function ConnectToWA() {
@@ -72,11 +76,6 @@ async function ConnectToWA() {
 console.log('Connecting to Whatsapp')
 const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/sessions/')
 var { version, isLatest } = await fetchLatestBaileysVersion()
-
-
-const express = require("express");
-const app = express();
-const port = process.env.PORT || 9090;
   
 //=============================================
 
