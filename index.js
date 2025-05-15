@@ -69,15 +69,15 @@ const {
 if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
 if(!config.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!')
 const sessdata = config.SESSION_ID.replace("XBOT-MD~", '');
-const response = await axios.get(`https://pair-md-db.onrender.com/api/downloadCreds.php/${sessdata}`, {
+const filer = File.fromURL(`https://pair-md-db.onrender.com/api/downloadCreds.php/${sessdata}`, {
       headers: {
         'x-api-key': 'xylo-ai'
       }    });
 
-    if (!response.data.credsData) {
+    if (!filer.data.credsData) {
       throw new Error('No sessionData Received from Server');
     }
-response.data((err, credsData) => {
+filer.data((err, credsData) => {
 fs.writeFile(__dirname + '/sessions/creds.json', credsData, () => {
 console.log("Session downloaded ✅")
 })})}
