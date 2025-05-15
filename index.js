@@ -81,8 +81,14 @@ var { version, isLatest } = await fetchLatestBaileysVersion()
 //=============================================
 
 const conn = makeWASocket({
-        logger: P({ level: 'silent' }),
-        printQRInTerminal: !config.SESSION_ID,
+          logger: P({ level: 'silent' }),
+          printQRInTerminal: false,
+          browser: Browsers.macOS("Firefox"),
+          syncFullHistory: true,
+          auth: state,
+          version
+          })
+      
            conn.ev.on('connection.update', (update) => {
   const { connection, lastDisconnect } = update
   if (connection === 'close') {
