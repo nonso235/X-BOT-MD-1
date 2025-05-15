@@ -202,6 +202,9 @@ cmd({
     }
     
     // Extract JIDs (supports comma or space separated)
+    const rawJids = jidInput.split(/[\s,]+/).filter(jid => jid.trim().length > 0);
+    
+    // Process JIDs (accepts with or without @g.us)
     const validJids = rawJids
       .map(jid => {
         const cleanJid = jid.replace(/(@g\.us|@s\.whatsapp\.net)$/i, "");
