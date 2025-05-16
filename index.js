@@ -107,8 +107,11 @@ const { loadSession } = require("./lib/creds");
   
   let up = `*Hello there X-BOT-MD User! 🍆* \n\n> Simple , Straight Forward But Loaded With Features 🗿, Meet X-BOT-MD WhatsApp Bot.\n\n *Thanks for using X-BOT-MD 🦟* \n\n> Support channel :- ⤵️\n\nhttps://whatsapp.com/channel/0029VarIiQL5a24AU5ZCVV0G\n\nSipport group:- https://chat.whatsapp.com/JI5sSc7LZUwG4Afj2dQBER\n\n- *YOUR PREFIX:* = ${prefix}\n\nDont forget to give star to repo ⬇️\n\nhttps://github.com/Mek-d1/X-BOT-MD\n\n> © Powered BY DavidX`;
     conn.sendMessage(conn.user.id, { image: { url: `https://files.catbox.moe/06cgye.jpg` }, caption: up })
-  }
-  })
+	  
+  setupLinkDetection(conn) //Start Antilink Detection After Bot Connects
+        }
+    })
+	  
   conn.ev.on('creds.update', saveCreds)
 
   //==============================
