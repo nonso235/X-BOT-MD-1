@@ -30,16 +30,14 @@ cmd({
         const data = await response.json();
 
         if (!data.success) return await reply("❌ Failed to download video!");
-        
-      const tiltle = data.result.title;
       
         await conn.sendMessage(from, {
             video: { url: data.result.download_url },
             mimetype: 'video/mp4',
-            caption: `*${title}*`
+            caption: `*Undefined*`
         }, { quoted: mek });
 
-        await reply(`✅ *${title}* downloaded successfully!`);
+        await reply(`✅ *Video downloaded successfully!`);
 
     } catch (error) {
         console.error(error);
