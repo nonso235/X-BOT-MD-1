@@ -22,6 +22,7 @@
     "@dark-yasiya/scrap": "1.0.1",
     "pino": "^7.0.5",
     "pm2": "^6.0.5",
+    "baileys-elite": "*",
     "util": "^0.12.4",
     "express": "latest",
     "moment-timezone": "^0.5.45",
