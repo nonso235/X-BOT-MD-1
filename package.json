@@ -9,8 +9,8 @@
     "restart": "pm2 restart XBOT-MD"
   },
   "engines": {
-    "node": "20.x",
-    "npm": "10.x"
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "6.7.17",
