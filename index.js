@@ -19,7 +19,7 @@ const {
     jidDecode,
     fetchLatestBaileysVersion,
     Browsers
-  } = require('baileys-elite')
+  } = require('@whiskeysockets/baileys')
   
   
   const l = console.log
@@ -112,7 +112,6 @@ const { loadSession } = require("./lib/creds");
   setupLinkDetection(conn) //Start Antilink Detection After Bot Connects
         }
     })
-	  await sock.sendMessage(id, { text: "Hello! I'm your AI assistant.", ai: true })
 	  
   conn.ev.on('creds.update', saveCreds)
 
