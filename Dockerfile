@@ -7,6 +7,8 @@ WORKDIR /app
 # Copy package.json and install dependencies
 COPY package*.json ./
 
+RUN npm install && npm install -g pm2 || yarn install --network-concurrency 1
+
 # Copy the rest of your application
 COPY . .
 
