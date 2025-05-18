@@ -73,12 +73,7 @@ cmd({
   config.PREFIX = newPrefix; 
   // Save config to file 
   fs.writeFileSync('./config.json', JSON.stringify(config, null, 2)); 
-  reply(`*Prefix changed to:* ${newPrefix}`); 
-  const { exec } = require("child_process"); 
-  reply("*_DATABASE UPDATE XMD RESTARTING NOW..._*"); 
-  await sleep(1500); 
-  exec("pm2 restart all"); 
-  reply("*_XMD STARTED NOW.._*"); 
+  reply(`*Prefix changed to:* ${newPrefix}`);  
 });
 
 cmd({
