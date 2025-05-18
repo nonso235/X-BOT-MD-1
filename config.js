@@ -30,6 +30,8 @@ PREFIX: process.env.PREFIX || ".",
 BOT_NAME: process.env.BOT_NAME || "X-BOT-MD",
 // add bot namw here for menu
 STICKER_NAME: process.env.STICKER_NAME || "X-BOT-MD",
+    
+VPS: toBool(process.env.VPS),
 // type sticker pack name 
 CUSTOM_REACT: process.env.CUSTOM_REACT || "false",
 // make this true for custum emoji react    
