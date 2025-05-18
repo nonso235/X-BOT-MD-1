@@ -4,7 +4,7 @@
   "description": "Bot created by DavidX",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start index.js --deep-monitoring --attach --name XBOT-MD",
+    "start": "pm2 start. --attach --name XBOT-MD",
     "stop": "pm2 stop XBOT-MD",
     "restart": "pm2 restart XBOT-MD"
   },
