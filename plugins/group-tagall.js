@@ -13,13 +13,13 @@ cmd({
 },
 async (conn, mek, m, { from, participants, isCreator, isAdmins, reply, isGroup, senderNumber, groupAdmins, prefix, command, args, body }) => {
     try {
-        if (!isGroup) return reply("❌ This command can only be used in groups.");
+        if (!isGroup) return reply("*This command can only be used on groups*.");
         
         const botOwner = conn.user.id.split(":")[0]; // Extract bot owner's number
         const senderJid = senderNumber + "@s.whatsapp.net";
 
         if (!isCreator && !isAdmins) {
-            return reply("❌ Only group admins or the bot owner can use this command.");
+            return reply("*Only group admins or the bot owner can use this command*.");
         }
 
         // Ensure group metadata is fetched properly
@@ -35,7 +35,7 @@ async (conn, mek, m, { from, participants, isCreator, isAdmins, reply, isGroup, 
 
         // Proper message extraction
         let message = body.slice(body.indexOf(command) + command.length).trim();
-        if (!message) message = "Attention Everyone"; // Default message
+        if (!message) message = "*NO MESSAGE PROVIDED*"; // Default message
 
         let teks = `▢ Group : *${groupName}*\n▢ Members : *${totalMembers}*\n▢ Message: *${message}*\n\n┌───⊷ *MENTIONS*\n`;
 
