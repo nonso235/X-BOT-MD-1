@@ -14,10 +14,9 @@ cmd({
 async (conn, mek, m, { from, participants, isCreator, isAdmins, reply, isGroup, senderNumber, groupAdmins, prefix, command, args, body }) => {
     try {
         if (!isGroup) return reply("*This command can only be used on groups*.");
-        
+    }
         const botOwner = conn.user.id.split(":")[0]; // Extract bot owner's number
         const senderJid = senderNumber + "@s.whatsapp.net";
-        }
 
         // Ensure group metadata is fetched properly
         let groupInfo = await conn.groupMetadata(from).catch(() => null);
