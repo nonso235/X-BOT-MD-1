@@ -112,11 +112,6 @@ const { loadSession } = require("./lib/creds");
   setupLinkDetection(conn) //Start Antilink Detection After Bot Connects
         }
     })
-
-sock.ev.on('group-participants.update', async (event) => {
-    const metadata = await sock.groupMetadata(event.id)
-    groupCache.set(event.id, metadata)
-})
 	  
   conn.ev.on('creds.update', saveCreds)
 
