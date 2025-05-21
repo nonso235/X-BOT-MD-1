@@ -9,11 +9,11 @@
     "restart": "pm2 restart XBOT-MD"
   },
   "engines": {
-    "node": "20.x",
-    "npm": "10.x"
+    "node": ">=20.x",
+    "npm": ">=10.x"
   },
   "dependencies": {
-    "baileys": "npm:@fizzxydev/baileys-pro@latest",
+    "baileys": "npm:@neoxr/baileys@7.9.18",
     "@adiwajshing/keyed-db": "^0.2.4",
     "@dark-yasiya/yt-dl.js": "1.0.5",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
