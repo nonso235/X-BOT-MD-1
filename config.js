@@ -59,6 +59,10 @@ MODE: process.env.MODE || "public",
 // make bot public-private-inbox-group 
 ANTI_LINK_KICK: process.env.ANTI_LINK_KICK || "false",
 // make anti link true,false for groups 
+ANTIVIEW_ONCE: process.env.ANTIVIEW_ONCE || "off",
+ANTILINK_WARN: process.env.ANTILINK_WARN || "false",
+ANTILINK_KICK: process.env.ANTILINK_KICK || "false",
+ANTILINK: process.env.ANTILINK || "false",
 AUTO_VOICE: process.env.AUTO_VOICE || "false",
 // make true for send automatic voices
 AUTO_STICKER: process.env.AUTO_STICKER || "false",
