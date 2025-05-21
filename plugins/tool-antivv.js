@@ -1,8 +1,8 @@
 const { cmd } = require("../command");
-const { downloadContentFromMessage } = require("@whiskeysockets/baileys");
+const { downloadContentFromMessage } = require("baileys");
 
 cmd({
-  pattern: "vv4",
+  pattern: "vv3",
   alias: ["viewonce3", "readviewonce3"],
   desc: "Retrieve view-once message",
   category: "tools",
