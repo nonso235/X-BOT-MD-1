@@ -29,7 +29,7 @@ async (conn, mek, m, { from, reply, senderNumber }) => {
                 forwardingScore: 999,
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
-                    newsletterJid: '120363348038810906@newsletter,
+                    newsletterJid: '120363348038810906@newsletter',
                     newsletterName: '『 LIBRARY CHECK』',
                     serverMessageId: 143
                 }
