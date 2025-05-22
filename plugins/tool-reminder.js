@@ -8,7 +8,7 @@ const prefix = config.PREFIX;
 const activeReminders = new Map();
 
 // Reminder image URL
-const REMINDER_IMAGE = 'https://files.catbox.moe/yv8zy4.jpg;
+const REMINDER_IMAGE = 'https://files.catbox.moe/yv8zy4.jpg';
 
 cmd({
     pattern: "reminder",
