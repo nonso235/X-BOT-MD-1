@@ -1,6 +1,7 @@
-
 const { cmd } = require('../command');
 const config = require('../config');
+const axios = require("axios");
+
 
 let bioInterval;
 const defaultBio = "⚡ XBOT MD | Online 🕒 {time}";
@@ -15,9 +16,19 @@ cmd({
     usage: `${config.PREFIX}autobio [on/off]`
 }, async (conn, mek, m, { args, reply, isOwner }) => {
     if (!isOwner) return reply("❌ Only the bot owner can use this command");
+    
+   const response = await axios.get("http://api.forismatic.com/api/1.0/", {
+      params: {
+        method: "getQuote",
+        format: "json",
+        lang: "en",
+      },
+    });
 
+    const { quoteText } = response.data;
+    
     const [action, ...bioParts] = args;
-    const customBio = bioParts.join(' ');
+    const customBio = quoteText;
 
     try {
         if (action === 'on') {
@@ -52,7 +63,7 @@ cmd({
 
         } else {
             return reply(`Usage:\n` +
-                `${config.PREFIX}autobio on [text] - Enable with optional custom text\n` +
+                `${config.PREFIX}autobio on @quote - Enable with random quotes\n` +
                 `${config.PREFIX}autobio off - Disable auto-bio\n\n` +
                 `Available placeholders:\n` +
                 `{time} - Current time\n` +
@@ -79,7 +90,7 @@ function startAutoBio(conn, bioText) {
             console.error('Bio update error:', error);
             stopAutoBio();
         }
-    }, 10 * 1000);
+    }, 3600 * 10800);
 }
 
 // Stop auto-bio updates
