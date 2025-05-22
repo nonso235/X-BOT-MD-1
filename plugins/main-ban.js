@@ -17,7 +17,7 @@ cmd({
             || (m.quoted?.sender ?? null)
             || (args[0]?.replace(/[^0-9]/g, '') + "@s.whatsapp.net");
 
-        if (!target) return reply("❌ Please provide a number or tag/reply a user.");
+        if (!target) return reply("Please provide a number or tag/reply a user.");
 
         let banned = JSON.parse(fs.readFileSync("./lib/ban.json", "utf-8"));
 
@@ -29,7 +29,7 @@ cmd({
         fs.writeFileSync("./lib/ban.json", JSON.stringify([...new Set(banned)], null, 2));
 
         await conn.sendMessage(from, {
-            image: { url: "https://files.catbox.moe/18il7k.jpg" },
+            image: { url: "https://files.catbox.moe/06cgye.jpg" },
             caption: `⛔ User has been banned from using the bot.`
         }, { quoted: mek });
 
@@ -54,7 +54,7 @@ cmd({
             || (m.quoted?.sender ?? null)
             || (args[0]?.replace(/[^0-9]/g, '') + "@s.whatsapp.net");
 
-        if (!target) return reply("❌ Please provide a number or tag/reply a user.");
+        if (!target) return reply("Please provide a number or tag/reply a user.");
 
         let banned = JSON.parse(fs.readFileSync("./lib/ban.json", "utf-8"));
 
@@ -66,7 +66,7 @@ cmd({
         fs.writeFileSync("./lib/ban.json", JSON.stringify(updated, null, 2));
 
         await conn.sendMessage(from, {
-            image: { url: "https://files.catbox.moe/18il7k.jpg" },
+            image: { url: "https://files.catbox.moe/yv8zy4.jpg" },
             caption: `✅ User has been unbanned.`
         }, { quoted: mek });
 
@@ -98,7 +98,7 @@ cmd({
         });
 
         await conn.sendMessage(from, {
-            image: { url: "https://files.catbox.moe/18il7k.jpg" },
+            image: { url: "https://files.catbox.moe/yv8zy4.jpg" },
             caption: msg
         }, { quoted: mek });
     } catch (err) {
