@@ -14,7 +14,7 @@ cmd(
     },
     async (conn, mek, m, { quoted, args, q, reply, from }) => {
         try {
-            if (!q) return reply('🔗 *Please provide a WhatsApp channel URL*\nExample: .channelstalk https://whatsapp.com/channel/0029VaGvk6XId7nHNGfiRs0m');
+            if (!q) return reply('🔗 *Please provide a WhatsApp channel URL*\nExample: .channelstalk https://whatsapp.com/channel/0029VarIiQL5a24AU5ZCVV0G');
 
             // Send processing reaction
             await conn.sendMessage(mek.chat, { react: { text: "⏳", key: mek.key } });
