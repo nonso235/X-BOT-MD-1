@@ -85,13 +85,13 @@ async (conn, mek, m, { from, reply, senderNumber }) => {
         await reply(fileList);
     } catch (error) {
         console.error("Error:", error); // Log the error
-        reply("*Error: Unable to fetch files from the SubZero Library. Please try again later.*");
+        reply("*Error: Unable to fetch files from the X Library. Please try again later.*");
     }
 });
 
 cmd({
-    pattern: "download", // Command trigger
-    alias: ["dl", "getbook"], // Aliases
+    pattern: "lbdownload", // Command trigger
+    alias: ["ldl", "getbook"], // Aliases
     use: '.download <number>', // Example usage
     react: "📥", // Emoji reaction
     desc: "Download a book from the X Library.", // Description
@@ -115,7 +115,7 @@ async (conn, mek, m, { from, reply, senderNumber, args }) => {
         const files = storage.root.children;
 
         if (files.length === 0) {
-            return reply("No files found in the SubZero Library."); // No files found
+            return reply("No files found in the X Library."); // No files found
         }
 
         // Check if the user provided a file number
