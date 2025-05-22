@@ -1,4 +1,7 @@
 const fs = require('fs');
+const path = require('path');
+const { getConfig } = require("./lib/configdb");
+
 if (fs.existsSync('config.env')) require('dotenv').config({ path: './config.env' });
 
 function convertToBool(text, fault = 'true') {
@@ -25,7 +28,7 @@ MENTION_REPLY: process.env.MENTION_REPLY || "false",
 // make true if want auto voice reply if someone menetion you 
 MENU_IMAGE_URL: process.env.MENU_IMAGE_URL || "https://files.catbox.moe/yv8zy4.jpg" ,
 // add custom menu and mention reply image url
-PREFIX: process.env.PREFIX || ".",
+PREFIX: getConfig("PREFIX") || ".",
 // add your prifix for bot   
 BOT_NAME: process.env.BOT_NAME || "X-BOT-MD",
 // add bot namw here for menu
@@ -54,7 +57,8 @@ READ_MESSAGE: process.env.READ_MESSAGE || "false",
 AUTO_REACT: process.env.AUTO_REACT || "false",
 // make this true or false for auto react on all msgs
 ANTI_BAD: process.env.ANTI_BAD || "false",
-// false or true for anti bad words  
+// false or true for anti bad words 
+ANTI_BOT: process.env.ANTI_BOT || "true",
 MODE: process.env.MODE || "public",
 // make bot public-private-inbox-group 
 ANTI_LINK_KICK: process.env.ANTI_LINK_KICK || "false",
