@@ -12,7 +12,7 @@ cmd({
     const response = await axios.get("https://insult.mattbas.org/api/insult");
     const content = response.data;
 
-    const message = `*..${content}..*`;
+    const message = `> ${content}`;
     reply(message);
   } catch (error) {
     console.error("Error fetching insult:", error);
