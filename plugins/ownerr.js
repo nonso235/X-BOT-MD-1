@@ -343,37 +343,6 @@ async (conn, mek, m, { from, args, isCreator, reply }) => {
 });
 
 cmd({
-    pattern: "setprefix",
-    alias: ["prefix"],
-    react: "🔧",
-    desc: "Change the bot's command prefix.",
-    category: "owner",
-    filename: __filename,
-}, async (conn, mek, m, { from, args, isCreator, reply }) => {
-    if (!isCreator) return reply("*📛 Only the owner can use this command!*");
-
-    if (!args[0]) return reply("❌ Please provide a new prefix. Example: `.setprefix !`");
-
-    const newPrefix = args[0];
-
-    // regex برای رد کردن حروف و اعداد (اگر حروف یا عدد بود خطا بده)
-    const hasLetterOrDigit = /[a-zA-Z0-9]/.test(newPrefix);
-
-    if (hasLetterOrDigit) {
-        return reply("❌ Invalid prefix. Letters and numbers are not allowed as prefix.");
-    }
-
-    if (newPrefix.length < 1 || newPrefix.length > 3) {
-        return reply("❌ Prefix length must be between 1 and 3 characters.");
-    }
-
-    config.PREFIX = newPrefix;
-
-    return reply(`✅ Prefix successfully changed to *${newPrefix}*`);
-});
-
-
-cmd({
     pattern: "mode",
     alias: ["setmode"],
     react: "🫟",
