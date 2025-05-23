@@ -5,7 +5,7 @@ const path = require('path');
 
 cmd({
     pattern: "fetch",
-    alias: ["get", "api"],
+    alias: ["api"],
     desc: "Fetch data from any URL (JSON, files, etc)",
     category: "tools",
     react: "🌐",
