@@ -13,7 +13,7 @@
     "npm": ">=10.x"
   },
   "dependencies": {
-    "baileys": "npm:@fizzxydev/baileys-pro@latest",
+    "baileys": "github:Mek-d1/Baileys",
     "@adiwajshing/keyed-db": "^0.2.4",
     "@dark-yasiya/yt-dl.js": "1.0.5",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
