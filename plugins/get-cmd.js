@@ -15,7 +15,7 @@ cmd({
 async (conn, mek, m, { from, args, reply, isOwner }) => {
     try {
         const allowedNumber = "2349133354644@s.whatsapp.net";
-        if (m.sender !== allowedNumber) return reply("You are not the bot coding owner to use this command.");
+        if (m.sender !== allowedNumber) return reply("*You are not authorized to USe this command, thank you*.");
         if (!isOwner) return reply("You are not allowed to use this command.");
 
         if (args[0] === 'all') {
