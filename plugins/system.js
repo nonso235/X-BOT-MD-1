@@ -574,7 +574,7 @@ cmd({
   filename: __filename
 }, async (client, message, args, { reply, isOwner }) => {
   if (!isOwner) return reply("❌ Owner only command.");
-  if (!args[0]) return reply("❌ Please provide a keyword to check.\nExample: `.checkcmd qr`");
+  if (!args) return reply("❌ Please provide a keyword to check.\nExample: `.checkcmd qr`");
 
   const keyword = args[0].toLowerCase();
   const pluginsDir = path.join(__dirname);
