@@ -76,20 +76,17 @@ const port = process.env.PORT || 9090;
 const { loadSession } = require("./lib/creds");
   
   //=============================================
-  
  async function connectToWA() {
+	 await loadSession();
     console.log("Connecting to WhatsApp ⏳️...");
-    const creds = await loadSession();
     
-    const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, 'sessions'), {
-        creds: creds || undefined 
-    })
+    const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, 'sessions')
     
-    const { version } = await fetchLatestBaileysVersion();
+    const { version } = await fetchLatestBaileysVersion()
     
     const conn = makeWASocket({
         logger: P({ level: 'silent' }),
-        printQRInTerminal: !creds, 
+        printQRInTerminal: false, 
         browser: Browsers.macOS("Firefox"),
         syncFullHistory: true,
         auth: state,
