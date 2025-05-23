@@ -77,22 +77,20 @@ const { loadSession } = require("./lib/creds");
   
   //=============================================
  async function connectToWA() {
-	 await loadSession();
-    console.log("Connecting to WhatsApp ⏳️...");
-    
-    const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, 'sessions')
-    
-    const { version } = await fetchLatestBaileysVersion()
-    
-    const conn = makeWASocket({
-        logger: P({ level: 'silent' }),
-        printQRInTerminal: false, 
-        browser: Browsers.macOS("Firefox"),
-        syncFullHistory: true,
-        auth: state,
-        version,
-        getMessage: async () => ({})
-    })
+     await loadSession();
+  console.log("Connecting to WhatsApp ⏳️...");
+  const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/sessions/')
+  var { version } = await fetchLatestBaileysVersion()
+  
+  const conn = makeWASocket({
+          logger: P({ level: 'silent' }),
+          printQRInTerminal: false,
+          browser: Browsers.macOS("Firefox"),
+          syncFullHistory: true,
+          auth: state,
+          version
+          })
+      
       
   conn.ev.on('connection.update', (update) => {
   const { connection, lastDisconnect, } = update
