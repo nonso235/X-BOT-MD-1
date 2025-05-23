@@ -76,47 +76,75 @@ const port = process.env.PORT || 9090;
 const { loadSession } = require("./lib/creds");
   
   //=============================================
- async function connectToWA() {
-     await loadSession();
-  console.log("Connecting to WhatsApp ⏳️...");
-  const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/sessions/')
-  var { version } = await fetchLatestBaileysVersion()
-  
-  const conn = makeWASocket({
-          logger: P({ level: 'silent' }),
-          printQRInTerminal: false,
-          browser: Browsers.macOS("Firefox"),
-          syncFullHistory: true,
-          auth: state,
-          version
-          })
-      
-      
-  conn.ev.on('connection.update', (update) => {
-  const { connection, lastDisconnect, } = update
-  if (connection === 'close') {
-  if (lastDisconnect.error.output?.statusCode !== DisconnectReason.loggedOut) {
-  connectToWA()
-  }
-  } else if (connection === 'open') {
-  console.log('Installing Plugins')
-  const path = require('path');
-  fs.readdirSync("./plugins/").forEach((plugin) => {
-  if (path.extname(plugin).toLowerCase() == ".js") {
-  require("./plugins/" + plugin);
+
+async function connectToWA() {
+    console.log("Connecting to WhatsApp ⏳️...");
+    const creds = await loadSession();
+    
+    const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, 'sessions'), {
+        creds: creds || undefined // Pass loaded creds if available
+    });
+    
+    const { version } = await fetchLatestBaileysVersion();
+    
+    const conn = makeWASocket({
+        logger: P({ level: 'silent' }),
+        printQRInTerminal: !creds, // Only show QR if no session loaded
+        browser: Browsers.macOS("Firefox"),
+        syncFullHistory: true,
+        auth: state,
+        version,
+        getMessage: async () => ({})
+    });
+    
+    // ... rest of your existing connectToWA code ...
+
+	
+    conn.ev.on('connection.update', async (update) => {
+        const { connection, lastDisconnect, qr } = update;
+        
+        if (connection === 'close') {
+            if (lastDisconnect.error?.output?.statusCode !== DisconnectReason.loggedOut) {
+                console.log('Connection lost, reconnecting...');
+                setTimeout(connectToWA, 5000);
+            } else {
+                console.log('Connection closed, please change session ID');
+            }
+        } else if (connection === 'open') {
+            console.log(' connected to WhatsApp ✅');
+            
+            
+            // Load plugins
+            const pluginPath = path.join(__dirname, 'plugins');
+            fs.readdirSync(pluginPath).forEach((plugin) => {
+                if (path.extname(plugin).toLowerCase() === ".js") {
+                    require(path.join(pluginPath, plugin));
+                }
+            });
+            console.log('Plugins installed successfully ✅');
+
+            
+                // Send connection message
+		
+                    const upMessage = `*Hello there X-BOT-MD User! 🍆* \n\n> Simple , Straight Forward But Loaded With Features 🗿, Meet X-BOT-MD WhatsApp Bot.\n\n *Thanks for using X-BOT-MD 🦟* \n\n> Support channel :- ⤵️\n\nhttps://whatsapp.com/channel/0029VarIiQL5a24AU5ZCVV0G\n\nSipport group:- https://chat.whatsapp.com/JI5sSc7LZUwG4Afj2dQBER\n\n- *YOUR PREFIX:* = ${prefix}\n\nDont forget to give star to repo ⬇️\n\nhttps://github.com/Mek-d1/X-BOT-MD\n\n> © Powered BY DavidX`;
+    conn.sendMessage(conn.user.id, { image: { url: `https://files.catbox.moe/06cgye.jpg` }, 
+                        caption: upMessage 
+                    });
+                    
+                } catch (sendError) {
+                    console.error('Error sending messages:', sendError);
+                }
+            }
+
+        if (qr) {
+            console.log('Scan the QR code to connect or use session ID');
+        }
+    });
+setupLinkDetection(conn)
   }
   });
-  console.log('Plugins installed successful ✅')
-  console.log('Bot connected to whatsapp ✅')
-  
-  let up = `*Hello there X-BOT-MD User! 🍆* \n\n> Simple , Straight Forward But Loaded With Features 🗿, Meet X-BOT-MD WhatsApp Bot.\n\n *Thanks for using X-BOT-MD 🦟* \n\n> Support channel :- ⤵️\n\nhttps://whatsapp.com/channel/0029VarIiQL5a24AU5ZCVV0G\n\nSipport group:- https://chat.whatsapp.com/JI5sSc7LZUwG4Afj2dQBER\n\n- *YOUR PREFIX:* = ${prefix}\n\nDont forget to give star to repo ⬇️\n\nhttps://github.com/Mek-d1/X-BOT-MD\n\n> © Powered BY DavidX`;
-    conn.sendMessage(conn.user.id, { image: { url: `https://raw.githubusercontent.com/Mek-d1/X-DATABASE/refs/heads/main/IMG_20250421_125309_668.jpg` }, caption: up })
-    
-    setupLinkDetection(conn)
-  }
-  })
-	  
-  conn.ev.on('creds.update', saveCreds)
+
+    conn.ev.on('creds.update', saveCreds);
 
   //==============================
 
