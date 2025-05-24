@@ -11,8 +11,8 @@ cmd({
   use: '.fancy',
   filename: __filename,
 }, async (conn, mek, msg, { from, args, reply }) => {
-    const id = arg[0]?.match(/\d+/)?.join('');
-    const text = arg.slice(1).join(" ");
+    const id = args[0]?.match(/\d+/)?.join('');
+    const text = args.slice(1).join(" ");
 
     try {
         if (id === undefined || text === undefined) {
