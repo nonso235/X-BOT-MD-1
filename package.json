@@ -13,7 +13,7 @@
     "restart": "pm2 restart XBOT-MD"
   },
   "dependencies": {
-    "baileys": "npm:baileys-pro@0.0.5",
+    "baileys": "npm:baileys-pro@latest",
     "axios": "^1.7.9",
     "@adiwajshing/keyed-db": "latest",
     "@dark-yasiya/scrap": "1.0.1",
@@ -26,7 +26,6 @@
     "adm-zip": "^0.5.16",
     "api-dylux": "1.8.5",
     "btch-downloader": "^2.2.9",
-    "@akc42/sqlite-db": "2.0.1",
     "buffer": "^6.0.3",
     "cheerio": "^1.0.0-rc.12",
     "crypto-digest-sync": "^1.0.0",
