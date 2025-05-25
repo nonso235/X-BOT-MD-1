@@ -231,8 +231,7 @@ async function connectToWA() {
     
     
     
-    setupLinkDetection(conn)
-  );
+    setupLinkDetection(conn);
 
     
 
