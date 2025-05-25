@@ -13,9 +13,8 @@ cmd({
 async (conn, mek, m, { from, sender, message, isGroup, args, reply, quoted, participants }) => {
     try {
         // 1. DETERMINE TARGET USER
-        let userJid = quoted?.sender || 
-                     mek.message?.extendedTextMessage?.contextInfo?.mentionedJid?.[0] || 
-                     sender;
+        let userJid = args[0] || mek.key.remoteJid
+             ;
 
         // 2. VERIFY USER EXISTS
         const [user] = await conn.onWhatsApp(userJid).catch(() => []);
