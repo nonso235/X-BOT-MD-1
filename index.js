@@ -232,8 +232,7 @@ async function connectToWA() {
     
     
     setupLinkDetection(conn)
-  }
-  });
+  );
 
     
 
