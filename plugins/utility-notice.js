@@ -103,7 +103,7 @@ cmd({
     });
 
     // Add a footer to the message
-    noticeMessage += "\n> sᴜʙᴢᴇʀᴏ ᴍᴅ ᴜᴘᴅᴀᴛᴇs";
+    noticeMessage += "\n> x-ʙᴏᴛ-ᴍᴅ ᴜᴘᴅᴀᴛᴇs";
 
     // Send the noticeboard with an image (status message)
     await conn.sendMessage(from, {
