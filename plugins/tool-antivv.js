@@ -1,46 +1,55 @@
-const { cmd } = require("../command");
-const { downloadContentFromMessage } = require("baileys");
-
+const { cmd, commands } = require('../command');
 cmd({
-  pattern: "vv3",
-  alias: ["viewonce3", "readviewonce3"],
-  desc: "Retrieve view-once message",
-  category: "tools",
-  react: "🕵️",
-  filename: __filename
-}, async (client, message, match, { isCreator }) => {
-  if (!isCreator) return message.reply("❌ Only owner can use this command.");
-  if (!message.quoted || message.quoted.mtype !== "viewOnceMessageV2") {
-    return message.reply("⚠️ Please reply to a *view-once* image or video.");
-  }
+    pattern: "vv3",
+    alias: ['retrive', 'iphonevv'],
+    desc: "Fetch and resend a ViewOnce message content for iPhone users (image/video).",
+    category: "misc",
+    use: '<query>',
+    filename: __filename
+},
+async (conn, mek, m, { from, reply }) => {
+    try {
+        const quotedMessage = m.msg.contextInfo.quotedMessage; // Get quoted message
 
-  try {
-    const viewOnceContent = message.quoted.message.viewOnceMessageV2.message;
-    const type = Object.keys(viewOnceContent)[0]; // imageMessage or videoMessage
-    const media = viewOnceContent[type];
+        if (quotedMessage && quotedMessage.viewOnceMessageV2) {
+            const quot = quotedMessage.viewOnceMessageV2;
+            if (quot.message.imageMessage) {
+                let cap = quot.message.imageMessage.caption;
+                let anu = await conn.downloadAndSaveMediaMessage(quot.message.imageMessage);
+                return conn.sendMessage(from, { image: { url: anu }, caption: cap }, { quoted: mek });
+            }
+            if (quot.message.videoMessage) {
+                let cap = quot.message.videoMessage.caption;
+                let anu = await conn.downloadAndSaveMediaMessage(quot.message.videoMessage);
+                return conn.sendMessage(from, { video: { url: anu }, caption: cap }, { quoted: mek });
+            }
+            if (quot.message.audioMessage) {
+                let anu = await conn.downloadAndSaveMediaMessage(quot.message.audioMessage);
+                return conn.sendMessage(from, { audio: { url: anu } }, { quoted: mek });
+            }
+        }
 
-    const stream = await downloadContentFromMessage(media, type.includes("image") ? "image" : "video");
-    let buffer = Buffer.from([]);
-    for await (const chunk of stream) {
-      buffer = Buffer.concat([buffer, chunk]);
+        // If there is no quoted message or it's not a ViewOnce message
+        if (!m.quoted) return reply("Please reply to a ViewOnce message.");
+        if (m.quoted.mtype === "viewOnceMessage") {
+            if (m.quoted.message.imageMessage) {
+                let cap = m.quoted.message.imageMessage.caption;
+                let anu = await conn.downloadAndSaveMediaMessage(m.quoted.message.imageMessage);
+                return conn.sendMessage(from, { image: { url: anu }, caption: cap }, { quoted: mek });
+            }
+            else if (m.quoted.message.videoMessage) {
+                let cap = m.quoted.message.videoMessage.caption;
+                let anu = await conn.downloadAndSaveMediaMessage(m.quoted.message.videoMessage);
+                return conn.sendMessage(from, { video: { url: anu }, caption: cap }, { quoted: mek });
+            }
+        } else if (m.quoted.message.audioMessage) {
+            let anu = await conn.downloadAndSaveMediaMessage(m.quoted.message.audioMessage);
+            return conn.sendMessage(from, { audio: { url: anu } }, { quoted: mek });
+        } else {
+            return reply("This is not a ViewOnce message.");
+        }
+    } catch (e) {
+        console.log("Error:", e);
+        reply("An error occurred while fetching the ViewOnce message.");
     }
-
-    if (type.includes("image")) {
-      await client.sendMessage(message.chat, {
-        image: buffer,
-        caption: media.caption || ""
-      }, { quoted: message });
-    } else if (type.includes("video")) {
-      await client.sendMessage(message.chat, {
-        video: buffer,
-        caption: media.caption || ""
-      }, { quoted: message });
-    } else {
-      message.reply("❌ Unsupported media type.");
-    }
-
-  } catch (err) {
-    console.error("VV Error:", err);
-    message.reply("❌ Error while retrieving view-once message.");
-  }
 });
