@@ -26,7 +26,7 @@ async (conn, mek, m, { from, pushname: _0x1279c5, reply }) => {
         const version = "².⁰.⁹";
         const plugins = commands.length;
         const now = new Date();
-        const time = now.toLocaleTimeString("en-US", { hour12: true, timeZone: "Afica/Lagos" });
+        const time = now.toLocaleTimeString("en-US", { hour12: true, timeZone: "Africa/Lagos" });
         const date = now.toLocaleDateString("en-CA", { timeZone: "Africa/Lagos" });
 
         const days = Math.floor(uptime / (3600 * 24));
