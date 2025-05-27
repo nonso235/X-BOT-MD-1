@@ -56,7 +56,7 @@ async (conn, mek, m, { from, pushname: _0x1279c5, reply }) => {
 
             menuText += `╭━━━━❮ *${category.toUpperCase()}* ❯━⊷\n`;
             cmdsInCat.forEach(cmd => {
-                menuText += `╏⁠➜ .${cmd.pattern}\n`;
+                menuText += `╏⁠➜ ${config.PREFIX} ${cmd.pattern}\n`;
             });
             menuText += `╰━━━━━━━━━━━━━━━━━⊷\n\n`;
         }
