@@ -37,7 +37,7 @@ async (conn, mek, m, { from, pushname: _0x1279c5, reply }) => {
 
         let menuText = `╭══〘〘 *𝗫𝗕𝗢𝗧-𝗠𝗗* 〙〙═⊷
 ┃❍ *Mᴏᴅᴇ:* ${config.MODE}
-┃❍ *Pʀᴇғɪx:* [ ${commandPrefix} ]
+┃❍ *Pʀᴇғɪx:* [ ${config.PREFIX} ]
 ┃❍ *Commnd By:* ${_0x1279c5 || "User"}
 ┃❍ *Pʟᴜɢɪɴs:* ${plugins}
 ┃❍ *Vᴇʀsɪᴏɴ:* ${version}
