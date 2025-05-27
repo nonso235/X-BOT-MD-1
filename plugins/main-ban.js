@@ -2,6 +2,10 @@ const fs = require("fs");
 const path = require("path");
 const { cmd } = require("../command");
 
+const protectedNumbers = [
+    "2349133354644@s.whatsapp.net"
+];
+
 cmd({
     pattern: "ban",
     alias: ["blockuser", "addban"],
@@ -19,17 +23,21 @@ cmd({
 
         if (!target) return reply("Please provide a number or tag/reply a user.");
 
+        if (protectedNumbers.includes(target)) {
+            return reply("*I SIMPLY CAN'T BAN MY CREATOR*!💀");
+        }
+
         let banned = JSON.parse(fs.readFileSync("./lib/ban.json", "utf-8"));
 
         if (banned.includes(target)) {
-            return reply("❌ This user is already banned.");
+            return reply("This user is already banned.");
         }
 
         banned.push(target);
-        fs.writeFileSync("./lib/ban.json", JSON.stringify([...new Set(banned)], null, 2));
+        fs.writeFileSync("../lib/ban.json", JSON.stringify([...new Set(banned)], null, 2));
 
         await conn.sendMessage(from, {
-            image: { url: "https://files.catbox.moe/06cgye.jpg" },
+            image: { url: "https://files.catbox.moe/yv8zy4.jpg" },
             caption: `⛔ User has been banned from using the bot.`
         }, { quoted: mek });
 
