@@ -34,7 +34,7 @@ cmd({
         }
 
         banned.push(target);
-        fs.writeFileSync("../lib/ban.json", JSON.stringify([...new Set(banned)], null, 2));
+        fs.writeFileSync("./lib/ban.json", JSON.stringify([...new Set(banned)], null, 2));
 
         await conn.sendMessage(from, {
             image: { url: "https://files.catbox.moe/yv8zy4.jpg" },
