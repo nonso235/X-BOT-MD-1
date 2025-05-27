@@ -5,7 +5,7 @@ const { platform, totalmem, freemem } = require('os');
 const { join } = require('path');
 
 cmd({
-    pattern: "menu",
+    pattern: "menu2",
     desc: "Show all commands",
     category: "main",
     filename: __filename
