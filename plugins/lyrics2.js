@@ -15,7 +15,7 @@ cmd({
 
         await reply("🔍 Searching for lyrics...");
 
-        const apiUrl = `https://api.giftedtech.web.id/api/search/lyrics?apikey=gifted&query=${encodeURIComponent(q)}`;
+        const apiUrl = `https://api.giftedtech.web.id/api/search/lyrics?apikey=gifted_api_6hf50c4j&query=${encodeURIComponent(q)}`;
         
         const { data } = await axios.get(apiUrl, {
             timeout: 8000 // 8 second timeout
