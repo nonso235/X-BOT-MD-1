@@ -30,7 +30,7 @@ cmd({
         await reply(`⬇️ Downloading ${quality} quality video...`);
 
         // API request
-        const apiUrl = `https://api.giftedtech.web.id/api/download/ytv?apikey=gifted&url=${encodeURIComponent(videoUrl)}`;
+        const apiUrl = `https://api.giftedtech.web.id/api/download/ytv?apikey=gifted_api_6hf50c4j&url=${encodeURIComponent(videoUrl)}`;
         const { data } = await axios.get(apiUrl, { timeout: 20000 });
 
         if (!data?.result?.download_url) {
