@@ -1,58 +1,59 @@
 const { cmd } = require("../command");
+const { downloadMediaMessage } = require("../lib/msg");
 
+// ✅ Define regex pattern using `new RegExp`
+const regexSend = new RegExp(`\\b(send|share|snd|give|save|sendme|forward)\\b`, "i");
+
+// ✅ Save WhatsApp Status (Manual Command)
 cmd({
-  pattern: "ssend",
-  alias: ["sendme", 'ssave'],
-  react: '📤',
-  desc: "Forwards quoted message back to user",
+  pattern: "ssave",
+  desc: "Save WhatsApp status",
   category: "utility",
-  filename: __filename
-}, async (client, message, match, { from }) => {
+  filename: __filename,
+}, async (conn, mek, m, { sender, reply }) => {
   try {
-    if (!match.quoted) {
-      return await client.sendMessage(from, {
-        text: "*🍁 Please reply to a message!*"
-      }, { quoted: message });
+    if (!m.quoted) return reply("*Reply to a WhatsApp status to save it.*");
+
+    const { msg, type } = m.quoted;
+    if (!msg || !type) return reply("*This message has no content to save.*");
+
+    const mediaTypes = ["imageMessage", "videoMessage", "audioMessage", "stickerMessage", "documentMessage"];
+
+    if (mediaTypes.includes(type)) {
+      const mediaBuffer = await m.quoted.download();
+      if (!mediaBuffer) return reply("*Failed to download media.*");
+      await conn.sendMessage(sender, { [type.replace("Message", "")]: mediaBuffer }, { quoted: mek });
+    } else if (type === "conversation" || type === "extendedTextMessage") {
+      await conn.sendMessage(sender, { text: msg.text || msg }, { quoted: mek });
     }
+  } catch (e) {
+    console.error("❌ Error while saving status:", e);
+  }
+});
 
-    const buffer = await match.quoted.download();
-    const mtype = match.quoted.mtype;
-    const options = { quoted: message };
+// ✅ Auto-Detect and Forward Based on Regex (Now Matches Your Example)
+cmd({ on: "quoted" }, async (conn, mek, m, { text, sender }) => {
+  try {
+    if (!m.quoted || !text) return;
 
-    let messageContent = {};
-    switch (mtype) {
-      case "imageMessage":
-        messageContent = {
-          image: buffer,
-          caption: match.quoted.text || '',
-          mimetype: match.quoted.mimetype || "image/jpeg"
-        };
-        break;
-      case "videoMessage":
-        messageContent = {
-          video: buffer,
-          caption: match.quoted.text || '',
-          mimetype: match.quoted.mimetype || "video/mp4"
-        };
-        break;
-      case "audioMessage":
-        messageContent = {
-          audio: buffer,
-          mimetype: "audio/mp4",
-          ptt: match.quoted.ptt || false
-        };
-        break;
-      default:
-        return await client.sendMessage(from, {
-          text: "❌ Only image, video, and audio messages are supported"
-        }, { quoted: message });
+    console.log(`📥 Received Text: ${text}`); // Debugging log
+    console.log(`🔍 Regex Match: ${regexSend.test(text.toLowerCase())}`); // Debugging log
+
+    if (!regexSend.test(text.toLowerCase())) return;
+
+    const { msg, type } = m.quoted;
+    if (!msg || !type) return;
+
+    const mediaTypes = ["imageMessage", "videoMessage", "audioMessage", "stickerMessage", "documentMessage"];
+
+    if (mediaTypes.includes(type)) {
+      const mediaBuffer = await m.quoted.download();
+      if (!mediaBuffer) return reply("*Failed to download media.*");
+      await conn.sendMessage(sender, { [type.replace("Message", "")]: mediaBuffer }, { quoted: mek });
+    } else if (type === "conversation" || type === "extendedTextMessage") {
+      await conn.sendMessage(sender, { text: msg.text || msg }, { quoted: mek });
     }
-
-    await client.sendMessage(message.sender, messageContent, options);
-  } catch (error) {
-    console.error("Forward Error:", error);
-    await client.sendMessage(from, {
-      text: "❌ Error forwarding message:\n" + error.message
-    }, { quoted: message });
+  } catch (e) {
+    console.error("❌ Error while forwarding message:", e);
   }
 });
