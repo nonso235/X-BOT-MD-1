@@ -28,7 +28,7 @@ async (conn, mek, m, {
             || (args[0]?.replace(/[^0-9]/g, '') + "@s.whatsapp.net");
     
         // If mentioning a user
-    } else {
+     else {
         return reply("❌ Please reply to a message or mention a user to remove.");
     }
 
