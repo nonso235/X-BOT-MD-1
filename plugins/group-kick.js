@@ -9,11 +9,11 @@ cmd({
   from, quoted, args, isGroup, isBotAdmins, isAdmins, reply 
 }) => {
   if (!isGroup) {
-    return reply("This command can only be used in groups.");
+    return reply("*This command can only be used in groups*.");
   }
   
   if (!isAdmins) {
-    return reply("Only group admins can use this command.");
+    return reply("*Only group admins can use this command*.");
   }
 
   try {
@@ -22,14 +22,14 @@ cmd({
             || (args[0]?.replace(/[^0-9]/g, '') + "@s.whatsapp.net");
 
     if (!users) {
-      return reply("Please reply to a message or provide a valid number.");
+      return reply("*Please reply to a message or provide a valid number*");
     }
 
     await conn.groupParticipantsUpdate(from, [users], "remove");
-    reply("User has been removed from the group successfully.");
+    reply("*User has been removed from the group successfully*.");
   } catch (error) {
-    console.error("Error kicking user:", error);
-    reply("Failed to remove the user. Ensure I have the necessary permissions.");
+    console.error("*Error kicking user*:", error);
+    reply("*Failed to remove the user. Ensure I have the necessary permissions*.");
   }
 });
 
