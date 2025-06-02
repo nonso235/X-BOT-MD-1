@@ -184,6 +184,9 @@ const { loadSession } = require("./lib/creds");
   const q = args.join(' ')
   const text = args.join(' ')
   const isGroup = from.endsWith('@g.us')
+	  if (isGroup) {
+                updateActivity(from, sender);
+	  }
   const sender = mek.key.fromMe ? (conn.user.id.split(':')[0]+'@s.whatsapp.net' || conn.user.id) : (mek.key.participant || mek.key.remoteJid)
   const senderNumber = sender.split('@')[0]
   const botNumber = conn.user.id.split(':')[0]
@@ -599,10 +602,6 @@ if (isBanned) return; // Ignore banned users completely
          * @param {*} options
          * @returns
          */
-    
-	              if (isGroup) {
-                updateActivity(from, sender);
-		      }
 	  //====================================================
     conn.sendTextWithMentions = async(jid, text, quoted, options = {}) => conn.sendMessage(jid, { text: text, contextInfo: { mentionedJid: [...text.matchAll(/@(\d{0,16})/g)].map(v => v[1] + '@s.whatsapp.net') }, ...options }, { quoted })
     
