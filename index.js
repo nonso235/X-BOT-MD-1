@@ -35,6 +35,8 @@ const {
   const StickersTypes = require('wa-sticker-formatter')
   const util = require('util')
   const { sms, downloadMediaMessage, AntiDelete } = require('./lib')
+  const { registerAntiNewsletter } = require('./plugins/antinewsletter')
+  const { updateActivity } = require('./lib/activity')
   const FileType = require('file-type');
   const axios = require('axios')
   const { fromBuffer } = require('file-type')
@@ -131,7 +133,7 @@ const { loadSession } = require("./lib/creds");
   conn.ev.on("group-participants.update", (update) => GroupEvents(conn, update));	
 	     
   //============================== 
-	
+	registerAntiNewsletter(conn);
   //=============readstatus=======
         
   conn.ev.on('messages.upsert', async(mek) => {
@@ -597,7 +599,11 @@ if (isBanned) return; // Ignore banned users completely
          * @param {*} options
          * @returns
          */
-    //=====================================================
+    
+	              if (isGroup) {
+                updateActivity(from, sender);
+		      }
+	  //====================================================
     conn.sendTextWithMentions = async(jid, text, quoted, options = {}) => conn.sendMessage(jid, { text: text, contextInfo: { mentionedJid: [...text.matchAll(/@(\d{0,16})/g)].map(v => v[1] + '@s.whatsapp.net') }, ...options }, { quoted })
     
             /**
