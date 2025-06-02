@@ -184,9 +184,6 @@ const { loadSession } = require("./lib/creds");
   const q = args.join(' ')
   const text = args.join(' ')
   const isGroup = from.endsWith('@g.us')
-	  if (isGroup) {
-                updateActivity(from, sender);
-	  }
   const sender = mek.key.fromMe ? (conn.user.id.split(':')[0]+'@s.whatsapp.net' || conn.user.id) : (mek.key.participant || mek.key.remoteJid)
   const senderNumber = sender.split('@')[0]
   const botNumber = conn.user.id.split(':')[0]
@@ -204,7 +201,11 @@ const { loadSession } = require("./lib/creds");
   conn.sendMessage(from, { text: teks }, { quoted: mek })
   }
   const udp = botNumber.split('@')[0];
-  const dave = ['2349133354644', '12567980814'];  // اینجا یک آرایه قرار می‌دهیم
+  const dave = ['2349133354644', '12567980814']; 
+	  if (isGroup) {
+                updateActivity(from, sender);
+	  }
+	  // اینجا یک آرایه قرار می‌دهیم
   const ownerFilev2 = JSON.parse(fs.readFileSync('./lib/owner.json', 'utf-8'));  
   let isCreator = [udp, ...dave, config.DEV + '@s.whatsapp.net', ...ownerFilev2]
     .map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net') // اطمینان حاصل کنید که شماره‌ها به فرمت صحیح تبدیل شده‌اند
