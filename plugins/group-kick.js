@@ -1,4 +1,4 @@
-const { cmd } = require('../command');
+/*const { cmd } = require('../command');
 
 cmd({
     pattern: "remove",
@@ -41,4 +41,4 @@ async (conn, mek, m, {
         console.error("Remove command error:", error);
         reply("❌ Failed to remove the member.");
     }
-});
+});*/
