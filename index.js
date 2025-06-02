@@ -38,6 +38,7 @@ const {
   const { registerAntiNewsletter } = require('./plugins/antinewsletter')
   const { updateActivity } = require('./lib/activity')
   const FileType = require('file-type');
+  const { File } = require('megajs');
   const axios = require('axios')
   const { fromBuffer } = require('file-type')
   const bodyparser = require('body-parser')
