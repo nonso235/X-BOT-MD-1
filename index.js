@@ -202,8 +202,8 @@ async function connectToWA() {
              const username = `Mek-d1`;
              const mekd1 = `https://github.com/${username}`;
 		
-                    const upMessage = `\`SubZero Bot Connected!\` ✅
-\n\n> _Light, Cold, Icy, Fast & Rich Loaded With Features, SubZero W.A Bot._\n\n────────────────
+                    const upMessage = `\`Xbot md Connected!\` ✅
+\n\n────────────────
 > 🌟 \`Star Repo\` : 
 "github.com/Mek-d1/X-BOT-MD\n
 >  \`Follow Us\` :
@@ -339,7 +339,7 @@ registerAntiNewsletter(conn);
 	  }
 	  // اینجا یک آرایه قرار می‌دهیم
   const ownerFilev2 = JSON.parse(fs.readFileSync('./lib/owner.json', 'utf-8'));  
-  let isCreator = [udp, ...dave, config.DEV + '@s.whatsapp.net', ...ownerFilev2]
+  let isCreator = [udp, ...davex, config.DEV + '@s.whatsapp.net', ...ownerFilev2]
     .map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net') // اطمینان حاصل کنید که شماره‌ها به فرمت صحیح تبدیل شده‌اند
     .includes(mek.sender);
 	  
