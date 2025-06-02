@@ -1,6 +1,39 @@
-/*const { cmd } = require('../command');
-
+const { cmd } = require('../command');
 cmd({
+  pattern: "kick",
+  desc: "Kicks replied/quoted user from group.",
+  category: "group",
+  filename: __filename,
+  use: "<quote|reply|number>"
+}, async (conn, mek, m, { 
+  from, quoted, args, isGroup, isBotAdmins, isAdmins, reply 
+}) => {
+  if (!isGroup) {
+    return reply("This command can only be used in groups.");
+  }
+  
+  if (!isAdmins) {
+    return reply("Only group admins can use this command.");
+  }
+
+  try {
+    let users = m.mentionedJid?.[0] 
+            || (m.quoted?.sender ?? null)
+            || (args[0]?.replace(/[^0-9]/g, '') + "@s.whatsapp.net");
+
+    if (!users) {
+      return reply("Please reply to a message or provide a valid number.");
+    }
+
+    await conn.groupParticipantsUpdate(from, [users], "remove");
+    reply("User has been removed from the group successfully.");
+  } catch (error) {
+    console.error("Error kicking user:", error);
+    reply("Failed to remove the user. Ensure I have the necessary permissions.");
+  }
+});
+
+/*cmd({
     pattern: "remove",
     alias: ["kick", "k"],
     desc: "Removes a member from the group",
