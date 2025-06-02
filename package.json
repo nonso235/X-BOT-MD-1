@@ -46,6 +46,7 @@
     "jimp": "^0.16.1",
     "megajs": "^1.1.0",
     "mongoose": "^8.0.0",
+    "mongodb": "^6.4.0",
     "mrnima-moviedl": "1.0.0",
     "node-cache": "^5.1.1",
     "node-fetch": "^2.6.1",
