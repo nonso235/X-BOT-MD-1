@@ -27,7 +27,8 @@ async (conn, mek, m, {
     if (m.quoted) {
         number = m.quoted.sender.split("@")[0]; // If replying to a message, get the sender's number
     } else if (q && q.includes("@")) {
-        number = q.replace(/[@\s]/g, ''); // If mentioning a user
+        number = q.replace(/[^0-9]/g, '');
+        // If mentioning a user
     } else {
         return reply("❌ Please reply to a message or mention a user to remove.");
     }
