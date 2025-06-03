@@ -45,7 +45,7 @@ async (conn, mek, m, { from, pushname, reply }) => {
         await conn.sendMessage(
             from,
             {
-                image: { url: `https://files.catbox.moe/06cgye.jpg` },
+                image: { url: `https://i.postimg.cc/rFV2pJW5/IMG-20250603-WA0017.jpg` },
                 caption: menuText},
                 
             { quoted: mek }
