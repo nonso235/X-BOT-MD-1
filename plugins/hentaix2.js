@@ -165,16 +165,47 @@ cmd(
         data.result.files.high
       ) {
         const videoDownloadUrl = data.result.files.high;
-        const caption = data.result.title;
-        await conn.sendMessage(from, {
-            video: { url: videoDownloadUrl },
-            caption: caption,
-            contextInfo: { mentionedJid: [m.sender] }
-        }, { quoted: mek });
-      }    
-    } catch (e) {
-        console.error("Error in xdl downloader command:", e);
-        reply(`An error occurred: ${e.message}`);
+        const videoResponse = await axios({
+          url: videoDownloadUrl,
+          method: "GET",
+          responseType: "stream",
+        });
+
+        const tempFilePath = path.join(__dirname, `${Date.now()}.mp4`);
+        const writer = fs.createWriteStream(tempFilePath);
+        videoResponse.data.pipe(writer);
+
+        await new Promise((resolve, reject) => {
+          writer.on("finish", resolve);
+          writer.on("error", reject);
+        });
+
+        console.log(`Video saved to ${tempFilePath}`);
+
+        await conn.sendMessage(
+          m.chat,
+          {
+            video: { url: tempFilePath },
+            caption: "Here is your downloaded video",
+            fileName: `${Date.now()}.mp4`,
+            mimetype: "video/mp4",
+          },
+          { quoted: m }
+        );
+
+        // Delete the temporary file.
+        fs.unlinkSync(tempFilePath);
+
+        setTimeout(() => {
+          clearReaction(m);
+        }, 5000);
+      } else {
+        console.log("Error: Could not retrieve video download URL. API response:", data);
+        return reply("*Error: Could not retrieve the video download URL. Please try again later!*");
+      }
+    } catch (err) {
+      console.error("Caught Error in xdl command:", err);
+      return reply(`Error in xdl command:\n\n${err}`);
     }
-});
-        
+  }
+);
