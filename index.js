@@ -214,7 +214,7 @@ ${mekd1}\n
 \n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀᴠɪᴅx  🇳🇬`;
                     
                     await conn.sendMessage(conn.user.id, { 
-                        image: { url: `https://files.catbox.moe/06cgye.jpg` },
+                        image: { url: `https://i.postimg.cc/rFV2pJW5/IMG-20250603-WA0017.jpg` },
 			ai: true,
                         caption: upMessage
 			
@@ -224,7 +224,7 @@ ${mekd1}\n
                     const cmdList = `Hello there X-BOT-MD User! 🍆* \n\n> Simple , Straight Forward But Loaded With Features 🗿, Meet X-BOT-MD WhatsApp Bot.\n\n *Thanks for using X-BOT-MD 🦟* \n\n> Support channel :- ⤵️\n\nhttps://whatsapp.com/channel/0029VarIiQL5a24AU5ZCVV0G\n\n> Support group:- https://chat.whatsapp.com/JI5sSc7LZUwG4Afj2dQBER\n\n- *YOUR PREFIX:* = ${prefix}\n\n*MODE* :- ${config.MODE}\n\nDont forget to give star to repo ⬇️\n\nhttps://github.com/Mek-d1/X-BOT-MD\n\n> © Powered BY DavidX`;
 
                     await conn.sendMessage(conn.user.id, {
-                        image: { url: 'https://files.catbox.moe/yv8zy4.jpg' },
+                        image: { url: 'https://i.postimg.cc/rFV2pJW5/IMG-20250603-WA0017.jpg' },
                         ai: true,
 			caption: cmdList
 			 
