@@ -148,9 +148,9 @@ cmd(
     { from, quoted, body, isCmd, command, args, q, isGroup, sender, botNumber, pushname, isMe, isOwner, reply }
   ) => {
     try {
-      if (args.length < 2)
+      if (args[0])
         return reply("*Please provide a video URL*");
-      const videoUrl = args[1];
+      const videoUrl = args[0];
 
       const apiUrl = `${giftedApiUrl}/download/xnxxdl?apikey=gifted_api_6hf50c4j&url=${encodeURIComponent(videoUrl)}`;
       const response = await axios.get(apiUrl);
