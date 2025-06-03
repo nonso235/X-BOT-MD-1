@@ -163,7 +163,7 @@ cmd(
         data.result &&
         data.result.files &&
         data.result.files.high
-      ) {
+      ) 
         const videoDownloadUrl = data.result.files.high;
         const caption = data.result.title;
         await conn.sendMessage(from, {
