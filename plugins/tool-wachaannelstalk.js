@@ -1,87 +1,52 @@
-const { cmd } = require('../command');
-const axios = require('axios');
-const Config = require('../config');
+const { cmd } = require("../command");
 
-cmd(
-    {
-        pattern: 'channelstalk',
-        alias: ['wstalk', 'wastalk'],
-        desc: 'Get WhatsApp channel information',
-        category: 'utility',
-        react: '🔍',
-        use: '<channel-url>',
-        filename: __filename,
-    },
-    async (conn, mek, m, { quoted, args, q, reply, from }) => {
-        try {
-            if (!q) return reply('🔗 *Please provide a WhatsApp channel URL*\nExample: .channelstalk https://whatsapp.com/channel/0029VarIiQL5a24AU5ZCVV0G');
+cmd({
+  pattern: "wastalk",
+  alias: ["wstalk", "cid"],
+  react: "🤔",
+  desc: "Get WhatsApp Channel info from link",
+  category: "whatsapp",
+  filename: __filename
+}, async (conn, mek, m, {
+  from,
+  args,
+  q,
+  reply
+}) => {
+  try {
+    if (!q) return reply("❎ Please provide a WhatsApp Channel link.\n\n*Example:* .cinfo https://whatsapp.com/channel/blablabla");
 
-            // Send processing reaction
-            await conn.sendMessage(mek.chat, { react: { text: "⏳", key: mek.key } });
+    const match = q.match(/whatsapp\.com\/channel\/([\w-]+)/);
+    if (!match) return reply("*This doesn't look like a normal Chanel Link.*\n\nMake sure it looks like:\nhttps://whatsapp.com/channel/bla+bla+bla");
 
-            // Extract channel ID from URL
-            let channelUrl = q.trim();
-            if (!channelUrl.includes('whatsapp.com/channel/')) {
-                return reply('❌ *Invalid URL* - Must be a WhatsApp channel link');
-            }
+    const inviteId = match[1];
 
-            // Call Nexoracle API
-            const apiUrl = `https://api.nexoracle.com/stalking/whatsapp-channel?apikey=e276311658d835109c&url=${encodeURIComponent(channelUrl)}`;
-            const response = await axios.get(apiUrl);
-            
-            if (response.data.status !== 200) {
-                return reply('❌ *Error fetching channel info* - API returned non-200 status');
-            }
-
-            const channelData = response.data.result;
-
-            // Format the response
-            const message = `
-📢 *Channel Stalker* 📢
-
-🏷️ *Title:* ${channelData.title}
-👤 *Owner:* ${response.data.owner}
-👥 *Followers:* ${channelData.followers}
-
-📝 *Description:*
-${channelData.description}
-
-🔗 *Link:* ${channelData.link}
-            `;
-
-            // Send message with channel image
-            await conn.sendMessage(mek.chat, { 
-                image: { url: channelData.image },
-                caption: message,
-                contextInfo: {
-                    externalAdReply: {
-                        title: channelData.title,
-                        body: `Pwered by DaviX`,
-                        thumbnail: await getImageBuffer(channelData.image),
-                        mediaType: 1,
-                        mediaUrl: channelData.link,
-                        sourceUrl: channelData.link
-                    }
-                }
-            }, { quoted: mek });
-
-            // Send success reaction
-            await conn.sendMessage(mek.chat, { react: { text: "✅", key: mek.key } });
-
-        } catch (error) {
-            console.error('Channel stalk error:', error);
-            await conn.sendMessage(mek.chat, { react: { text: "❌", key: mek.key } });
-            reply('⚠️ *Error stalking channel* - Please check the URL and try again');
-        }
-    }
-);
-
-// Helper function to get image buffer
-async function getImageBuffer(url) {
+    let metadata;
     try {
-        const response = await axios.get(url, { responseType: 'arraybuffer' });
-        return Buffer.from(response.data, 'binary');
-    } catch {
-        return null;
+      metadata = await conn.newsletterMetadata("invite", inviteId);
+    } catch (e) {
+      return reply("Failed to fetch channel metadata. Make sure the link is correct.");
     }
-}
+
+    if (!metadata || !metadata.id) return reply("❌ Channel not found or inaccessible.");
+
+    const infoText = `*— 乂 Channel Info —*\n\n` +
+      `🆔 *ID:* ${metadata.id}\n` +
+      `📌 *Name:* ${metadata.name}\n` +
+      `👥 *Followers:* ${metadata.subscribers?.toLocaleString() || "N/A"}\n` +
+      `📅 *Created on:* ${metadata.creation_time ? new Date(metadata.creation_time * 1000).toLocaleString("id-ID") : "Unknown"}`;
+
+    if (metadata.preview) {
+      await conn.sendMessage(from, {
+        image: { url: `https://pps.whatsapp.net${metadata.preview}` },
+        caption: infoText
+      }, { quoted: m });
+    } else {
+      await reply(infoText);
+    }
+
+  } catch (error) {
+    console.error("❌ Error in wstalk cmd:", error);
+    reply("An unexpected error occurred.");
+  }
+});
