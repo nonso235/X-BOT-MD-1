@@ -2,7 +2,7 @@ const { cmd } = require("../command");
 
 cmd({
   on: "body"
-}, async (conn, mek, m, { from, body }) => {
+}, async (conn, mek, m, { from, message, body }) => {
   const lowerBody = body.toLowerCase();
   if (!["save", "send"].includes(lowerBody)) return;
   if (!mek.quoted) {
@@ -48,7 +48,7 @@ cmd({
         }, { quoted: mek });
     }
 
-    await conn.sendMessage(from, messageContent, options);
+    await conn.sendMessage(message.sender, messageContent, options);
   } catch (error) {
     console.error("Save Error:", error);
     await conn.sendMessage(from, {
