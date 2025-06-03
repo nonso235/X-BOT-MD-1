@@ -2,12 +2,12 @@ const { cmd } = require("../command");
 
 cmd({
   on: "body"
-}, async (conn, mek, m, { from, body }) => {
+}, async (conn, mek, message, { from, body }) => {
   const lowerBody = body.toLowerCase();
   if (!["save", "send"].includes(lowerBody)) return;
   if (!mek.quoted) {
     return await conn.sendMessage(from, {
-      text: "❗ لطفاً روی یک پیام ریپلای کنید"
+      text: "*Reply to a message*"
     }, { quoted: mek });
   }
 
@@ -44,15 +44,15 @@ cmd({
         break;
       default:
         return await conn.sendMessage(from, {
-          text: "❌ فقط عکس، ویدیو، صوت یا استیکر پشتیبانی می‌شود"
+          text: "*Only video, image, stickers & audio messages are currently supported*"
         }, { quoted: mek });
     }
 
-    await conn.sendMessage(from, messageContent, options);
+    await conn.sendMessage(message.sender, messageContent, options);
   } catch (error) {
     console.error("Save Error:", error);
     await conn.sendMessage(from, {
-      text: "❌ خطا هنگام ذخیره یا ارسال پیام:\n" + error.message
+      text: "*Eror saving stuffs*:\n" + error.message
     }, { quoted: mek });
   }
 });
