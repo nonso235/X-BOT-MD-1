@@ -162,30 +162,6 @@ console.log(e)
 })
 
 cmd({
-    pattern: "htimg",
-    alias: ["hentaimg"],
-    react: '💫',
-    desc: "Download anime hentai images.",
-    category: "hentai",
-    use: '.hentai',
-    filename: __filename
-},
-async(conn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
-try{
-let res = await axios.get(`https://fantox-apis.vercel.app/${q}`)
-let wm = `
-©ᴘᴏᴡᴇʀᴇᴅ ʙʏ Dᴀᴠɪᴅ X`
-await conn.sendMessage(from, { image: { url: res.data.url }, caption: wm}, { quoted: mek })
-} catch (e) {
-reply(cants)
-console.log(e)
-}
-})
-
-
-
-
-cmd({
     pattern: "dog",
     desc: "Fetch a random dog image.",
     category: "fun_extra",
