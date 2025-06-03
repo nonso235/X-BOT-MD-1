@@ -93,7 +93,7 @@ cmd(
     { from, quoted, body, isCmd, command, args, q, isGroup, sender, botNumber, pushname, isMe, isOwner, reply }
   ) => {
     try {
-      const query = args.slice(1).join(" ");
+      const query = q;
       if (!query)
         return reply("Please provide a search term, e.g., `.xsearch mom and son`.");
 
