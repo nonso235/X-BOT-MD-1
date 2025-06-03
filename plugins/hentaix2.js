@@ -163,7 +163,7 @@ cmd(
         data.result &&
         data.result.files &&
         data.result.files.high
-      ) 
+      ) {
         const videoDownloadUrl = data.result.files.high;
         const caption = data.result.title;
         await conn.sendMessage(from, {
@@ -171,7 +171,7 @@ cmd(
             caption: caption,
             contextInfo: { mentionedJid: [m.sender] }
         }, { quoted: mek });
-        
+      }    
     } catch (e) {
         console.error("Error in xdl downloader command:", e);
         reply(`An error occurred: ${e.message}`);
