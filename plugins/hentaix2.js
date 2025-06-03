@@ -165,21 +165,16 @@ cmd(
         data.result.files.high
       ) {
         const videoDownloadUrl = data.result.files.high;
-        const fileExt = videoDownloadUrl.split('.').pop().split(/[?#]/)[0] || 'mp4';
-        
-        // Send video file
+        const caption = data.result.title;
         await conn.sendMessage(from, {
-            video: { 
-                url:  videoDownloadUrl
-            },
-            caption: `*${data.result.title}*`,
-            fileName: `${data.result.title.replace(/[^\w\s.-]/g, '')}.${fileExt}`,
-            mimetype: `video/${fileExt === 'mp4' ? 'mp4' : 'x-matroska'}`,
+            video: { url: videoDownloadUrl },
+            caption: caption,
+            contextInfo: { mentionedJid: [m.sender] }
         }, { quoted: mek });
-
-    } catch (error) {
-        console.error("Video download error:", error);
-        reply(`❌ Error: ${error.message}\nTry again or use a different video`);
+        
+    } catch (e) {
+        console.error("Error in xdl downloader command:", e);
+        reply(`An error occurred: ${e.message}`);
     }
 });
-      
+        
