@@ -95,7 +95,7 @@ cmd(
     try {
       const query = args.slice(1).join(" ");
       if (!query)
-        return reply("Please provide a search term, e.g., `.xsearch mon and son`.");
+        return reply("Please provide a search term, e.g., `.xsearch mom and son`.");
 
       await reply("fetching results please wait....");
 
@@ -106,15 +106,15 @@ cmd(
 
       const data = await response.json();
       if (
-        !data.gifted.success ||
-        !data.gifted.results ||
-        data.gifted.results.length === 0
+        !data.success ||
+        !data.results ||
+        data.results.length === 0
       ) {
         return reply(`No results found for "${query}".`);
       }
 
       let message = `*Results for "${query}":*\n\n`;
-      data.gifted.results.forEach((result, index) => {
+      data.results.forEach((result, index) => {
         message += `${index + 1}. ${result.title}\nLink: ${result.link}\n\n`;
       });
 
@@ -162,9 +162,9 @@ cmd(
         data.success &&
         data.result &&
         data.result.files &&
-        data.result.files.low
+        data.result.files.high
       ) {
-        const videoDownloadUrl = data.result.files.low;
+        const videoDownloadUrl = data.result.files.high;
         const videoResponse = await axios({
           url: videoDownloadUrl,
           method: "GET",
