@@ -163,7 +163,7 @@ cmd({
     if (!isGroup || antibotAction === "off") return; // Check if antibot is enabled
 
     const messageId = mek.key.id;
-    if (!messageId || !messageId.startsWith("3EB")) return; // Detect bot-generated messages
+    if (!messageId || !messageId.startsWith("31F")) return; // Detect bot-generated messages
 
     if (!isBotAdmins) return reply("*_I'm not an admin, so I can't take action!_*");
     if (isAdmins) return; // Ignore admins
