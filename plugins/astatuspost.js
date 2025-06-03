@@ -2,13 +2,19 @@ const { cmd } = require("../command");
 
 cmd({
   pattern: "post",
-  alias: ["poststatus", "story", "meqdia"],
+  alias: ["poststatus", "status", "story", "repost", "reshare"],
   react: '📝',
   desc: "Posts replied media to bot's status",
   category: "utility",
   filename: __filename
-}, async (client, message, match, extras) => {
+}, async (client, message, match, { from, isCreator }) => {
   try {
+    if (!isCreator) {
+      return await client.sendMessage(from, {
+        text: "*📛 This is an owner-only command.*"
+      }, { quoted: message });
+    }
+
     const quotedMsg = message.quoted ? message.quoted : message;
     const mimeType = (quotedMsg.msg || quotedMsg).mimetype || '';
 
@@ -53,7 +59,7 @@ cmd({
     await client.sendMessage("status@broadcast", statusContent);
 
     await client.sendMessage(message.chat, {
-      text: "✅ Media posted to my status successfully."
+      text: "✅ Status Uploaded Successfully."
     }, { quoted: message });
 
   } catch (error) {
