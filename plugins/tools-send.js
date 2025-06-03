@@ -4,7 +4,7 @@ cmd({
   on: "body"
 }, async (conn, mek, message, { from, body }) => {
   const lowerBody = body.toLowerCase();
-  if (!["save", "send"].includes(lowerBody)) return;
+  if (!["save", "keep", "send"].includes(lowerBody)) return;
   if (!mek.quoted) {
     return await conn.sendMessage(from, {
       text: "*Reply to a message*"
