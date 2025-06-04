@@ -994,12 +994,6 @@ async (conn, mek, m, { from, reply, text, isCreator }) => {
         return reply("*An error occurred while processing your request*.");
     }
 });
-          
-
-
-    conn.ev.on("messages.upsert", handler);
-    setTimeout(() => conn.ev.off("messages.upsert", handler), 30 * 60 * 1000); // 30 دقیقه
-});
 
 //--------------------------------------------
 //  ANI-BAD COMMANDS
