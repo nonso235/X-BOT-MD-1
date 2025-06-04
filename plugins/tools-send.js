@@ -28,6 +28,12 @@ cmd({
         messageContent = {
           video: buffer,
           caption: mek.quoted.text || '',
+          };
+        break;
+      case "conversation":
+        messageContent = {
+          mtype: extendedTextMessage,
+          caption: mek.quoted.text || '',
         };
         break;
       case "audioMessage":
