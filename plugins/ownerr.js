@@ -683,7 +683,7 @@ async (conn, mek, m, { from, args, isCreator, reply }) => {
 cmd({
   pattern: "antilink",
   desc: "Configure ANTILINK system with menu",
-  category: "owner",
+  category: "misc",
   react: "🛡️",
   filename: __filename
 }, async (conn, mek, m, { from, isGroup, isAdmins, isBotAdmins, isCreator, reply }) => {
@@ -958,42 +958,91 @@ cmd({
 //--------------------------------------------
 //  ANI-DELETE COMMANDS
 //--------------------------------------------
-cmd({
-    pattern: "antidelete",
-    alias: ['antidel', 'adel'],
-    desc: "Toggle anti-delete feature",
-    category: "misc",
-    filename: __filename
-},
-async (conn, mek, m, { from, reply, text, isCreator }) => {
-    if (!isCreator) return reply('This command is only for the bot owner');
+
+      cmd({
+  pattern: "antidelete",
+  desc: "Configure AntiDelete System (No DB)",
+  category: "owner",
+  react: "🛡️",
+  filename: __filename,
+}, async (conn, mek, m, { from, isCreator, reply }) => {
+  try {
+    if (!isCreator) return reply("_*❗This Command Can Only Be Used By My Owner !*_");
     
-    try {
-        const currentStatus = await getAnti();
-        const prefix = config.PREFIX;
-        
-        if (!text || text.toLowerCase() === 'status') {
-            return reply(`*AntiDelete Status:* ${currentStatus ? '✅ ON' : '❌ OFF'}\n\nUsage:\n• ${prefix}antidelete on - Enable\n• ${prefix}antidelete off - Disable`);
+    const { cmd } = require('../command');
+    const { setAnti, getAnti } = require('../data/antidel');
+    const config = require('../config');
+    const currentStatus = await getAnti();
+    const currentMode = config.ANTI_DEL_PATH === "inbox" ? "Inbox" : "Same Chat";
+    const enabledText = currentStatus ? `✅ AntiDelete is ON (${currentMode})` : `❌ AntiDelete is OFF`;
+
+    const menuText = `> *ANTIDELETE SETTINGS*
+
+> Current Status: ${enabledText}
+
+Reply with:
+
+*1.* Enable AntiDelete => Same Chat  
+*2.* Enable AntiDelete => Inbox (private)  
+*3.* Disable AntiDelete & Set Inbox Mode
+
+╭────────────────  
+│ *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀᴠɪᴅx*  
+╰─────────────────◆`;
+
+    const sentMsg = await conn.sendMessage(from, {
+      image: { url: "https://i.postimg.cc/G3k8H6gC/IMG-20250603-WA0017.jpg" },
+      caption: menuText
+    }, { quoted: mek });
+
+    const messageID = sentMsg.key.id;
+
+    const handler = async (msgData) => {
+      try {
+        const receivedMsg = msgData.messages[0];
+        if (!receivedMsg?.message || !receivedMsg.key?.remoteJid) return;
+
+        const quotedId = receivedMsg.message?.extendedTextMessage?.contextInfo?.stanzaId;
+        const isReply = quotedId === messageID;
+        if (!isReply) return;
+
+        const replyText =
+          receivedMsg.message?.conversation ||
+          receivedMsg.message?.extendedTextMessage?.text ||
+          "";
+
+        const sender = receivedMsg.key.remoteJid;
+
+        if (replyText === "1") {
+          await setAnti(true);
+          config.ANTI_DEL_PATH = "same";
+          await conn.sendMessage(sender, { text: "✅ AntiDelete Enabled.\n🔄 Mode: Same Chat" }, { quoted: receivedMsg });
+        } else if (replyText === "2") {
+          await setAnti(true);
+          config.ANTI_DEL_PATH = "inbox";
+          await conn.sendMessage(sender, { text: "✅ AntiDelete Enabled.\n📩 Mode: Inbox" }, { quoted: receivedMsg });
+        } else if (replyText === "3") {
+          await setAnti(false);
+          config.ANTI_DEL_PATH = "inbox";
+          await conn.sendMessage(sender, { text: "❌ AntiDelete Disabled.\n📩 Mode: Inbox" }, { quoted: receivedMsg });
+        } else {
+          await conn.sendMessage(sender, { text: "❗ Invalid option. Please reply with *1*, *2*, or *3*." }, { quoted: receivedMsg });
         }
-        
-        const action = text.toLowerCase().trim();
-        
-        if (action === 'on') {
-            await setAnti(true);
-            return reply('*Anti-delete has been enabled*');
-        } 
-        else if (action === 'off') {
-            await setAnti(false);
-            return reply('*Anti-delete has been disabled*');
-        } 
-        else {
-            return reply(`Invalid command. Usage:\n• ${prefix}antidelete on\n• ${prefix}antidelete off\n• ${prefix}antidelete status`);
-        }
-    } catch (e) {
-        console.error("*Error in antidelete command*:", e);
-        return reply("*An error occurred while processing your request*.");
-    }
+
+        conn.ev.off("messages.upsert", handler);
+      } catch (err) {
+        console.log("AntiDelete CMD handler error:", err);
+      }
+    };
+
+    conn.ev.on("messages.upsert", handler);
+    setTimeout(() => conn.ev.off("messages.upsert", handler), 600000); // 10min
+
+  } catch (e) {
+    reply(`❗ Error: ${e.message}`);
+  }
 });
+
 
 //--------------------------------------------
 //  ANI-BAD COMMANDS
