@@ -6,9 +6,7 @@ cmd({
   const lowerBody = body.toLowerCase();
   if (!["save", "keep", "send"].includes(lowerBody)) return;
   if (!mek.quoted) {
-    return await conn.sendMessage(from, {
-      text: ""
-    }, { quoted: mek });
+    return;
   }
 
   try {
