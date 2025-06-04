@@ -32,7 +32,7 @@ cmd({
         break;
       case "conversation":
         messageContent = {
-          mtype: extendedTextMessage,
+          minetype: extendedTextMessage,
           caption: mek.quoted.text || '',
         };
         break;
