@@ -7,7 +7,7 @@ cmd({
   if (!["save", "keep", "send"].includes(lowerBody)) return;
   if (!mek.quoted) {
     return await conn.sendMessage(from, {
-      text: "*Reply to a message*"
+      text: ""
     }, { quoted: mek });
   }
 
@@ -27,12 +27,6 @@ cmd({
       case "videoMessage":
         messageContent = {
           video: buffer,
-          caption: mek.quoted.text || '',
-          };
-        break;
-      case "conversation":
-        messageContent = {
-          minetype: extendedTextMessage,
           caption: mek.quoted.text || '',
         };
         break;
