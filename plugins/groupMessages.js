@@ -64,13 +64,13 @@ cmd(
 
   },
 
-  async (conn, mek, m, { from, args, reply, isGroup, isBotAdmins }) => {
+  async (conn, mek, m, { from, args, reply, isGroup, isCreator }) => {
 
     try {
 
       if (!isGroup) return reply("This command can only be used in groups.");
 
-      if (!isBotAdmins) return reply("I'm not admin.");
+      if (!isCreator) return reply("Owner features.");
 
       if (args.length === 0) {
 
@@ -166,13 +166,13 @@ cmd(
 
   },
 
-  async (conn, mek, m, { from, args, reply, isGroup, isBotAdmins }) => {
+  async (conn, mek, m, { from, args, reply, isGroup, isCreator }) => {
 
     try {
 
       if (!isGroup) return reply("This command can only be used in groups.");
 
-      if (!isBotAdmins) return reply("I'm not admin.");
+      if (!isCreator) return reply("Owner feature");
 
       if (args.length === 0) {
 
