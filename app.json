@@ -13,11 +13,6 @@
       "value": ""
     },  
     
-    "PREFIX": {
-      "description": "paste your bot prefix note! Don't apply null prefix.",
-      "required": false,
-      "value": "."
-    },
     
     "MODE": {
       "description": "select your bot work type public-private-inbox-group.",
@@ -36,25 +31,12 @@
       "required": true,
       "value": "false"
     }, 
-    
-    "OWNER_NUMBER": {
-      "description": "put the owner number for bot.",
-      "required": false,
-      "value": "2349133354644"
-
-    }, 
 
     "ANTI_LINK": {
       "description": "Make it true if you want bot auto remove group link.",
       "required": true,
       "value": "false"
       
-    },
-
-     "WELCOME": {
-      "description": "make it true if want goodbye and welcome message in groups.",
-      "required": false,
-      "value": "false"
     }
 
 },
