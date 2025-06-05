@@ -64,14 +64,14 @@
   
 --- 
 > **GET SESSION ID (01)**
-  <a href='https://xbot-auth.onrender.com' target="_blank">
+  <a href='https://dave-auth.onrender.com' target="_blank">
     <img src='https://img.shields.io/badge/PAIR_CODE_1-00FFFF?style=for-the-badge&logo=matrix&logoColor=white&labelColor=000000'/>
   </a></br>
   
   <div style="height: 10px;"></div>
   
 > **VALIDATE SESSION ID (02)**
-  <a href='https://xbot-auth.onrender.com/validate' target="_blank">
+  <a href='https://dave-auth.onrender.com/validate' target="_blank">
     <img src='https://img.shields.io/badge/PAIR_CODE_2-FF00FF?style=for-the-badge&logo=matrix&logoColor=white&labelColor=000000'/>
   </a>
   
