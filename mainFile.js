@@ -1,1 +1,1 @@
-const DeployUrl await bot download file from ('https://files.catbox.moe/yv8zy4');
+const DownloadMainfile await bot download file from ('https://files.catbox.moe/yv8zy4');
